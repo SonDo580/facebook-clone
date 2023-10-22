@@ -12,44 +12,44 @@ const userSchema = Schema(
   {
     firstName: {
       type: String,
-      required: [true, "First Name is required"],
+      required: true,
       trim: true,
     },
     lastName: {
       type: String,
-      required: [true, "Last Name is required"],
+      required: true,
       trim: true,
     },
     username: {
       type: String,
-      required: [true, "Username is required"],
+      required: true,
       trim: true,
       unique: true,
     },
     email: {
       type: String,
-      required: [true, "Email is required"],
+      required: true,
       trim: true,
     },
     password: {
       type: String,
-      required: [true, "Password is required"],
+      required: true,
     },
     birthDay: {
       type: Number,
-      required: [true, "Birth day is required"],
+      required: true,
     },
     birthMonth: {
       type: Number,
-      required: [true, "Birth month is required"],
+      required: true,
     },
     birthYear: {
       type: Number,
-      required: [true, "Birth year is required"],
+      required: true,
     },
     gender: {
       type: String,
-      required: [true, "Gender is required"],
+      required: true,
       trim: true,
     },
     verified: {
