@@ -1,8 +1,7 @@
 const asyncHandler = require("express-async-handler");
-const bcrypt = require("bcryptjs");
-const lodash = require("lodash");
 
 const User = require("../models/user");
+const { getUserInfo, getHashedPassword } = require("../utils/auth");
 
 const register = asyncHandler(async (req, res) => {
   const {
@@ -27,8 +26,7 @@ const register = asyncHandler(async (req, res) => {
   }
 
   // Hash password
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(password, salt);
+  const hashedPassword = await getHashedPassword(password);
 
   // Create and save user
   const user = await User.create({
@@ -48,7 +46,7 @@ const register = asyncHandler(async (req, res) => {
     throw new Error("Invalid user data!");
   }
 
-  res.status(201).json(lodash.omit(user, ["password"]));
+  res.status(201).json(getUserInfo(user));
 });
 
 module.exports = {
