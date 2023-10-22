@@ -2,8 +2,11 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 
-const app = express();
+const connectDB = require("./config/db");
 
+connectDB();
+
+const app = express();
 app.use(cors()); // should define allowedOrigins in production
 
 const PORT = process.env.PORT || 5000;
