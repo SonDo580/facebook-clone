@@ -8,6 +8,10 @@ const {
 const { Schema, model } = mongoose;
 const { ObjectId } = Schema;
 
+// TODO:
+// length constraint of string fields
+// detailed structure of some array fields
+// add fields: profile picture, cover
 const userSchema = Schema(
   {
     firstName: {
