@@ -6,7 +6,7 @@ const { getUserInfo, getHashedPassword } = require("../utils/auth");
 const register = asyncHandler(async (req, res) => {
   const {
     firstName,
-    lastname,
+    lastName,
     email,
     username,
     password,
@@ -31,7 +31,7 @@ const register = asyncHandler(async (req, res) => {
   // Create and save user
   const user = await User.create({
     firstName,
-    lastname,
+    lastName,
     email,
     username,
     birthDay,
