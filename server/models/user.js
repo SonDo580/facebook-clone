@@ -110,6 +110,7 @@ const userSchema = Schema(
           },
           relationship: {
             type: String,
+            enum: FAMILY_RELATIONSHIPS,
           },
         },
       ],
