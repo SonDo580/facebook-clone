@@ -26,6 +26,7 @@ const userSchema = Schema(
     username: {
       type: String,
       trim: true,
+      required: true,
       unique: true,
     },
     email: {
