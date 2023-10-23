@@ -7,7 +7,7 @@ const MIN_MONTH = 1;
 const MAX_MONTH = 12;
 const MAX_AGE = 200;
 
-export {
+module.exports = {
   NAME_MAX_LENGTH,
   PASSWORD_MIN_LENGTH,
   PASSWORD_MAX_LENGTH,
