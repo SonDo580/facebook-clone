@@ -1,53 +1,71 @@
 const { body } = require("express-validator");
 
+const {
+  NAME_MAX_LENGTH,
+  PASSWORD_MIN_LENGTH,
+  PASSWORD_MAX_LENGTH,
+  MIN_MONTH_DAY,
+  MAX_MONTH_DAY,
+  MIN_MONTH,
+  MAX_MONTH,
+} = require("../constants");
+const {
+  requiredMessage,
+  lengthMessage,
+  invalidMessage,
+} = require("../utils/message");
+
 const registerValidations = [
   body("firstName")
     .trim()
     .notEmpty()
-    .withMessage("First Name is required!")
-    .isLength({ max: 30 })
-    .withMessage("First Name must contains at most 30 characters!")
+    .withMessage(requiredMessage("First Name"))
+    .isLength({ max: NAME_MAX_LENGTH })
+    .withMessage(lengthMessage("First Name", { max: NAME_MAX_LENGTH }))
     .escape(),
   body("lastName")
     .trim()
     .notEmpty()
-    .withMessage("Last Name is required!")
-    .isLength({ max: 30 })
-    .withMessage("Last Name must contains at most 30 characters!")
+    .withMessage(requiredMessage("Last Name"))
+    .isLength({ max: NAME_MAX_LENGTH })
+    .withMessage(lengthMessage("Last Name", { max: NAME_MAX_LENGTH }))
     .escape(),
   body("email")
     .trim()
     .notEmpty()
-    .withMessage("Email is required!")
+    .withMessage(requiredMessage("Email"))
     .isEmail()
-    .withMessage("Email is invalid!")
+    .withMessage(invalidMessage("Email"))
     .normalizeEmail(),
   body("password")
     .notEmpty()
-    .withMessage("Password is required!")
-    .isLength({ min: 6, max: 40 })
-    .withMessage("Password must be between 6 and 40 characters!")
-    .matches("")
-    .withMessage("Password must contains alphanumeric and special characters!"),
-  body("gender").trim().notEmpty().withMessage("Gender is required!"),
+    .withMessage(requiredMessage("Password"))
+    .isLength({ min: PASSWORD_MIN_LENGTH, max: PASSWORD_MAX_LENGTH })
+    .withMessage(
+      lengthMessage("Password", {
+        min: PASSWORD_MIN_LENGTH,
+        max: PASSWORD_MAX_LENGTH,
+      })
+    ),
+  body("gender").trim().notEmpty().withMessage(requiredMessage("Gender")),
   body("birthDay")
     .trim()
     .notEmpty()
-    .withMessage("Birth Day is required!")
-    .isInt({ min: 1, max: 31 })
-    .withMessage("Birth Day is invalid!"),
+    .withMessage(requiredMessage("Birth Day"))
+    .isInt({ min: MIN_MONTH_DAY, max: MAX_MONTH_DAY })
+    .withMessage(invalidMessage("Birth Day")),
   body("birthMonth")
     .trim()
     .notEmpty()
-    .withMessage("Birth Month is required!")
-    .isInt({ min: 1, max: 12 })
-    .withMessage("Birth Month is invalid!"),
+    .withMessage(requiredMessage("Birth Month"))
+    .isInt({ min: MIN_MONTH, max: MAX_MONTH })
+    .withMessage(invalidMessage("Birth Month")),
   body("birthYear")
     .trim()
     .notEmpty()
-    .withMessage("Birth Year is required!")
+    .withMessage(requiredMessage("Birth Year"))
     .isInt()
-    .withMessage("Birth Year is invalid!"),
+    .withMessage(invalidMessage("Birth Year")),
 ];
 
 module.exports = {
