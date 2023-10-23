@@ -1,12 +1,18 @@
-const { MAX_AGE } = require("../constants");
 const { invalidMessage } = require("./message");
+const {
+  MAX_AGE,
+  MIN_MONTH_DAY,
+  MAX_MONTH_DAY,
+  MIN_MONTH,
+  MAX_MONTH,
+} = require("../constants");
 
 const validateDateOfBirth = ({ birthDay, birthMonth, birthYear }) => {
-  if (birthDay < 1 || birthDay > 31) {
+  if (birthDay < MIN_MONTH_DAY || birthDay > MAX_MONTH_DAY) {
     return invalidMessage("Birth Day");
   }
 
-  if (birthMonth < 1 || birthMonth > 12) {
+  if (birthMonth < MIN_MONTH || birthMonth > MAX_MONTH) {
     return invalidMessage("Birth Month");
   }
 
