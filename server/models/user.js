@@ -9,7 +9,6 @@ const { Schema, model } = mongoose;
 const { ObjectId } = Schema;
 
 // TODO:
-// length constraint of string fields
 // detailed structure of some array fields
 // add fields: profile picture, cover
 const userSchema = Schema(
@@ -26,7 +25,6 @@ const userSchema = Schema(
     },
     username: {
       type: String,
-      required: true,
       trim: true,
       unique: true,
     },
@@ -34,6 +32,7 @@ const userSchema = Schema(
       type: String,
       required: true,
       trim: true,
+      unique: true,
     },
     password: {
       type: String,
