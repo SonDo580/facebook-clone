@@ -1,4 +1,4 @@
-const MAX_AGE = 200;
+const { MAX_AGE } = require("../constants");
 
 const validateDateOfBirth = ({ birthDay, birthMonth, birthYear }) => {
   if (birthDay < 1 || birthDay > 31) {
