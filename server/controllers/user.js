@@ -3,8 +3,12 @@ const { validationResult } = require("express-validator");
 
 const User = require("../models/user");
 const { registerValidations } = require("../validations/user");
-const { getUserInfo, getHashedPassword } = require("../utils/auth");
 const { validateDateOfBirth } = require("../utils/validate");
+const {
+  getUserInfo,
+  getHashedPassword,
+  getUsername,
+} = require("../utils/auth");
 
 const register = [
   registerValidations,
@@ -48,11 +52,15 @@ const register = [
     // Hash password
     const hashedPassword = await getHashedPassword(password);
 
+    // Generate unique username
+    const username = await getUsername(firstName, lastName);
+
     // Create and save user
     const user = await User.create({
       firstName,
       lastName,
       email,
+      username,
       password: hashedPassword,
       birthDay,
       birthMonth,
