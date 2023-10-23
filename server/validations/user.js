@@ -62,19 +62,22 @@ const registerValidations = [
     .notEmpty()
     .withMessage(requiredMessage("Birth Day"))
     .isInt({ min: MIN_MONTH_DAY, max: MAX_MONTH_DAY })
-    .withMessage(invalidMessage("Birth Day")),
+    .withMessage(invalidMessage("Birth Day"))
+    .toInt(),
   body("birthMonth")
     .trim()
     .notEmpty()
     .withMessage(requiredMessage("Birth Month"))
     .isInt({ min: MIN_MONTH, max: MAX_MONTH })
-    .withMessage(invalidMessage("Birth Month")),
+    .withMessage(invalidMessage("Birth Month"))
+    .toInt(),
   body("birthYear")
     .trim()
     .notEmpty()
     .withMessage(requiredMessage("Birth Year"))
     .isInt()
-    .withMessage(invalidMessage("Birth Year")),
+    .withMessage(invalidMessage("Birth Year"))
+    .toInt(),
 ];
 
 module.exports = {
