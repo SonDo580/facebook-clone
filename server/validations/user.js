@@ -46,6 +46,15 @@ const registerValidations = [
         min: PASSWORD_MIN_LENGTH,
         max: PASSWORD_MAX_LENGTH,
       })
+    )
+    .isStrongPassword({
+      minLowercase: 1,
+      minUppercase: 1,
+      minNumbers: 1,
+      minSymbols: 1,
+    })
+    .withMessage(
+      "Password must contains both uppercase letters, lowecase letters, numbers, symbols!"
     ),
   body("gender").trim().notEmpty().withMessage(requiredMessage("Gender")),
   body("birthDay")
