@@ -1,5 +1,6 @@
 const lodash = require("lodash");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const User = require("../models/user");
 
@@ -25,8 +26,12 @@ const getUsername = async (firstName, lastName) => {
   }
 };
 
+const generateToken = (payload, options) =>
+  jwt.sign(payload, process.env.JWT_SECRET, options);
+
 module.exports = {
   getUserInfo,
   getHashedPassword,
   getUsername,
+  generateToken,
 };
