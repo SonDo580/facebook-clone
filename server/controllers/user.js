@@ -3,6 +3,7 @@ const { body, validationResult } = require("express-validator");
 
 const User = require("../models/user");
 const { getUserInfo, getHashedPassword } = require("../utils/auth");
+const { validateDateOfBirth } = require("../utils/validate");
 
 const registerValidations = [
   body("firstName")
@@ -33,6 +34,25 @@ const registerValidations = [
     .withMessage("Password must be between 6 and 40 characters!")
     .matches("")
     .withMessage("Password must contains alphanumeric and special characters!"),
+  body("gender").trim().notEmpty().withMessage("Gender is required!"),
+  body("birthDay")
+    .trim()
+    .notEmpty()
+    .withMessage("Birth Day is required!")
+    .isInt({ min: 1, max: 31 })
+    .withMessage("Birth Day is invalid!"),
+  body("birthMonth")
+    .trim()
+    .notEmpty()
+    .withMessage("Birth Month is required!")
+    .isInt({ min: 1, max: 12 })
+    .withMessage("Birth Month is invalid!"),
+  body("birthYear")
+    .trim()
+    .notEmpty()
+    .withMessage("Birth Year is required!")
+    .isInt()
+    .withMessage("Birth Year is invalid!"),
 ];
 
 const register = [
@@ -55,6 +75,17 @@ const register = [
       birthYear,
       gender,
     } = req.body;
+
+    // Validate date of birth
+    const dateOfBirthError = validateDateOfBirth({
+      birthDay,
+      birthMonth,
+      birthYear,
+    });
+    if (dateOfBirthError) {
+      res.status(400);
+      throw new Error(dateOfBirthError);
+    }
 
     // Check if email existed
     const existedUser = await User.findOne({ email });

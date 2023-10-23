@@ -1,6 +1,6 @@
 const MAX_AGE = 200;
 
-const validateDateOfBirth = (birthDay, birthMonth, birthYear) => {
+const validateDateOfBirth = ({ birthDay, birthMonth, birthYear }) => {
   if (birthDay < 1 || birthDay > 31) {
     return "Birth Day is invalid!";
   }
