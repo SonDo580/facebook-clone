@@ -4,7 +4,7 @@ const dotenv = require("dotenv");
 
 const connectDB = require("./config/db");
 const errorHandler = require("./middlewares/error");
-const userRouter = require("./routes/user");
+const authRouter = require("./routes/auth");
 
 dotenv.config();
 connectDB(); // connect to database
@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
-app.use("/users", userRouter);
+app.use("/auth", authRouter);
 
 // Handle error
 app.use(errorHandler);

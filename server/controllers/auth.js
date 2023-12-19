@@ -3,8 +3,10 @@ const { validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 
 const User = require("../models/user");
-const { registerValidations } = require("../validations/user");
-const { validateDateOfBirth } = require("../utils/validate");
+const {
+  registerValidations,
+  validateDateOfBirth,
+} = require("../validations/auth");
 const {
   getUserInfo,
   getHashedPassword,
@@ -12,6 +14,7 @@ const {
   generateToken,
 } = require("../utils/auth");
 
+/* Register handler */
 const register = [
   registerValidations,
   asyncHandler(async (req, res) => {
@@ -91,6 +94,7 @@ const register = [
   }),
 ];
 
+/* Login handler */
 const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
