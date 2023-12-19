@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 const dotenv = require("dotenv");
 
 const connectDB = require("./config/db");
@@ -11,7 +12,8 @@ connectDB(); // connect to database
 const app = express();
 
 // Add middlewares
-app.use(cors()); // should define allowedOrigins in production
+app.use(cors()); // TODO: specify allowedOrigins in production mode
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
