@@ -8,31 +8,24 @@ const {
 const { Schema, model } = mongoose;
 const { ObjectId } = Schema;
 
-// TODO:
-// detailed structure of some array fields
-// add fields: profile picture, cover
 const userSchema = Schema(
   {
     firstName: {
       type: String,
       required: true,
-      trim: true,
     },
     lastName: {
       type: String,
       required: true,
-      trim: true,
     },
     username: {
       type: String,
-      trim: true,
       required: true,
       unique: true,
     },
     email: {
       type: String,
       required: true,
-      trim: true,
       unique: true,
     },
     password: {
@@ -54,24 +47,44 @@ const userSchema = Schema(
     gender: {
       type: String,
       required: true,
-      trim: true,
     },
     verified: {
       type: Boolean,
       default: false,
     },
-    friends: {
-      type: Array,
+    profilePicture: {
+      type: String,
+      default: "",
     },
-    followers: {
-      type: Array,
+    coverPhoto: {
+      type: String,
+      default: "",
     },
-    following: {
-      type: Array,
-    },
-    friendRequests: {
-      type: Array,
-    },
+    friends: [
+      {
+        type: ObjectId,
+        ref: "User",
+        since: { type: Date, default: new Date() },
+      },
+    ],
+    followers: [
+      {
+        type: ObjectId,
+        ref: "User",
+      },
+    ],
+    following: [
+      {
+        type: ObjectId,
+        ref: "User",
+      },
+    ],
+    friendRequests: [
+      {
+        type: ObjectId,
+        ref: "User",
+      },
+    ],
     savedPosts: [
       {
         post: { type: ObjectId, ref: "Post" },
@@ -118,8 +131,16 @@ const userSchema = Schema(
           },
         },
       ],
-      websites: { type: Array },
-      socialLinks: { type: Array },
+      websites: [
+        {
+          type: String,
+        },
+      ],
+      socialLinks: [
+        {
+          type: String,
+        },
+      ],
       languages: [
         {
           type: String,
