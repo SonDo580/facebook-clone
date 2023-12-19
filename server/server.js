@@ -1,22 +1,24 @@
 const express = require("express");
 const cors = require("cors");
-require("dotenv").config();
+const dotenv = require("dotenv");
 
-// connect to database
 const connectDB = require("./config/db");
-connectDB();
+const errorHandler = require("./middlewares/error");
+const userRouter = require("./routes/user");
 
+dotenv.config();
+connectDB(); // connect to database
 const app = express();
+
+// Add middlewares
 app.use(cors()); // should define allowedOrigins in production
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
-const userRouter = require("./routes/user");
-app.use("/", userRouter);
+app.use("/users", userRouter);
 
 // Handle error
-const { errorHandler } = require("./middlewares/error");
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
