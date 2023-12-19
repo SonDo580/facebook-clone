@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const { validationResult } = require("express-validator");
+const bcrypt = require("bcryptjs");
 
 const User = require("../models/user");
 const { registerValidations } = require("../validations/user");
@@ -90,6 +91,41 @@ const register = [
   }),
 ];
 
+const login = [
+  asyncHandler(async (req, res) => {
+    const { email, password } = req.body;
+
+    // Find user with email
+    const user = await User.findOne({ email });
+    if (!user) {
+      res.status(401);
+      throw new Error("Invalid credentials!");
+    }
+
+    // Check password
+    const validPassword = await bcrypt.compare(password, user.password);
+    if (!validPassword) {
+      res.status(401);
+      throw new Error("Invalid credentials!");
+    }
+
+    // Generate token
+    const token = generateToken(
+      { userId: user._id.toString() },
+      { expiresIn: "7d" }
+    );
+
+    res
+      .status(200)
+      .cookie("token", token, {
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+        httpOnly: true,
+      })
+      .json(getUserInfo(user));
+  }),
+];
+
 module.exports = {
   register,
+  login,
 };
