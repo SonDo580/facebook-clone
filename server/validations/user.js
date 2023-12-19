@@ -48,6 +48,7 @@ const registerValidations = [
       })
     )
     .isStrongPassword({
+      minLength: PASSWORD_MIN_LENGTH,
       minLowercase: 1,
       minUppercase: 1,
       minNumbers: 1,
