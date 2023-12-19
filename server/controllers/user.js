@@ -8,6 +8,7 @@ const {
   getUserInfo,
   getHashedPassword,
   getUsername,
+  generateToken,
 } = require("../utils/auth");
 
 const register = [
@@ -73,7 +74,19 @@ const register = [
       throw new Error("Invalid user data!");
     }
 
-    res.status(201).json(getUserInfo(user));
+    // Generate token
+    const token = generateToken(
+      { userId: user._id.toString() },
+      { expiresIn: "7d" }
+    );
+
+    res
+      .status(201)
+      .cookie("token", token, {
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+        httpOnly: true,
+      })
+      .json(getUserInfo(user));
   }),
 ];
 
