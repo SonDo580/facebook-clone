@@ -4,6 +4,7 @@ import { validationResult } from "express-validator";
 import bcrypt from "bcryptjs";
 
 import User from "../models/user";
+import { CustomRequest } from "../types";
 import { registerValidations, validateDateOfBirth } from "../validations/auth";
 import {
   getUserInfo,
@@ -125,4 +126,9 @@ const login = asyncHandler(async (req: Request, res: Response) => {
     .json(getUserInfo(user));
 });
 
-export { register, login };
+const logout = (req: CustomRequest, res: Response) => {
+  res.clearCookie("token");
+  res.json({ message: "Success" });
+};
+
+export { register, login, logout };
