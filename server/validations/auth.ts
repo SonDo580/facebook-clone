@@ -1,4 +1,4 @@
-import { body } from "express-validator";
+import { ValidationChain, body } from "express-validator";
 
 import {
   NAME_MAX_LENGTH,
@@ -16,7 +16,7 @@ import {
   invalidMessage,
 } from "../utils/message";
 
-const registerValidations = [
+const registerValidations: ValidationChain[] = [
   body("firstName")
     .trim()
     .notEmpty()

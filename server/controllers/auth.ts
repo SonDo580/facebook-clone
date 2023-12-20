@@ -14,7 +14,7 @@ import {
 
 /* Register handler */
 const register = [
-  registerValidations,
+  ...registerValidations,
   asyncHandler(async (req: Request, res: Response) => {
     // Check validation errors
     const errors = validationResult(req).array();
