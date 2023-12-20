@@ -145,7 +145,30 @@ const rejectFriendRequest = asyncHandler(
 );
 
 /* Unfriend */
-const unfriend = asyncHandler(async (req: CustomRequest, res: Response) => {});
+const unfriend = asyncHandler(async (req: CustomRequest, res: Response) => {
+  const currentUser = req.user!;
+  const currentUserId = currentUser._id.toString();
+  const otherUserId = req.params.userId;
+
+  if (currentUserId === otherUserId) {
+    res.status(403);
+    throw new Error("You unfriend yourself!");
+  }
+
+  const friendList = currentUser.friends.map((friend) => friend.user);
+  if (!checkIncludeId(friendList, otherUserId)) {
+    res.status(403);
+    throw new Error("You and this user are not friends!");
+  }
+
+  // Update 'friends' array of both users
+  await currentUser.updateOne({ $pull: { friends: { user: otherUserId } } });
+
+  const otherUser = await User.findById(otherUserId);
+  await otherUser!.updateOne({ $pull: { friends: { user: currentUserId } } });
+
+  res.json({ message: "Success" });
+});
 
 export {
   follow,
