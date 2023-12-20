@@ -1,23 +1,21 @@
-const asyncHandler = require("express-async-handler");
-const { validationResult } = require("express-validator");
-const bcrypt = require("bcryptjs");
+import { Request, Response } from "express";
+import asyncHandler from "express-async-handler";
+import { validationResult } from "express-validator";
+import bcrypt from "bcryptjs";
 
-const User = require("../models/user");
-const {
-  registerValidations,
-  validateDateOfBirth,
-} = require("../validations/auth");
-const {
+import User from "../models/user";
+import { registerValidations, validateDateOfBirth } from "../validations/auth";
+import {
   getUserInfo,
   getHashedPassword,
   getUsername,
   generateToken,
-} = require("../utils/auth");
+} from "../utils/auth";
 
 /* Register handler */
 const register = [
   registerValidations,
-  asyncHandler(async (req, res) => {
+  asyncHandler(async (req: Request, res: Response) => {
     // Check validation errors
     const errors = validationResult(req).array();
     if (errors.length > 0) {
@@ -37,11 +35,11 @@ const register = [
     } = req.body;
 
     // Validate date of birth
-    const dateOfBirthError = validateDateOfBirth({
+    const dateOfBirthError = validateDateOfBirth(
       birthDay,
       birthMonth,
-      birthYear,
-    });
+      birthYear
+    );
     if (dateOfBirthError) {
       res.status(400);
       throw new Error(dateOfBirthError);
@@ -95,7 +93,7 @@ const register = [
 ];
 
 /* Login handler */
-const login = asyncHandler(async (req, res) => {
+const login = asyncHandler(async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
   // Find user with email
@@ -127,7 +125,4 @@ const login = asyncHandler(async (req, res) => {
     .json(getUserInfo(user));
 });
 
-module.exports = {
-  register,
-  login,
-};
+export { register, login };

@@ -1,8 +1,10 @@
-const requiredMessage = (name) => `${name} is required!`;
+const requiredMessage = (name: string) => `${name} is required!`;
 
-const invalidMessage = (name) => `${name} is invalid!`;
+const invalidMessage = (name: string) => `${name} is invalid!`;
 
-const lengthMessage = (name, { min, max }) => {
+type Range = Partial<{ min: number; max: number }>;
+
+const lengthMessage = (name: string, { min, max }: Range) => {
   if (!min && max) {
     return `${name} must contains at most ${max} characters!`;
   }
@@ -15,8 +17,4 @@ const lengthMessage = (name, { min, max }) => {
   return `${name} must be between ${min} and ${max} characters!`;
 };
 
-module.exports = {
-  requiredMessage,
-  invalidMessage,
-  lengthMessage,
-};
+export { requiredMessage, invalidMessage, lengthMessage };

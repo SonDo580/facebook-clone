@@ -1,6 +1,6 @@
-const { body } = require("express-validator");
+import { body } from "express-validator";
 
-const {
+import {
   NAME_MAX_LENGTH,
   PASSWORD_MIN_LENGTH,
   PASSWORD_MAX_LENGTH,
@@ -9,12 +9,12 @@ const {
   MIN_MONTH,
   MAX_MONTH,
   MAX_AGE,
-} = require("../constants");
-const {
+} from "../constants";
+import {
   requiredMessage,
   lengthMessage,
   invalidMessage,
-} = require("../utils/message");
+} from "../utils/message";
 
 const registerValidations = [
   body("firstName")
@@ -24,6 +24,7 @@ const registerValidations = [
     .isLength({ max: NAME_MAX_LENGTH })
     .withMessage(lengthMessage("First Name", { max: NAME_MAX_LENGTH }))
     .escape(),
+
   body("lastName")
     .trim()
     .notEmpty()
@@ -31,6 +32,7 @@ const registerValidations = [
     .isLength({ max: NAME_MAX_LENGTH })
     .withMessage(lengthMessage("Last Name", { max: NAME_MAX_LENGTH }))
     .escape(),
+
   body("email")
     .trim()
     .notEmpty()
@@ -38,6 +40,7 @@ const registerValidations = [
     .isEmail()
     .withMessage(invalidMessage("Email"))
     .normalizeEmail(),
+
   body("password")
     .notEmpty()
     .withMessage(requiredMessage("Password"))
@@ -58,7 +61,9 @@ const registerValidations = [
     .withMessage(
       "Password must contains both uppercase letters, lowecase letters, numbers, symbols!"
     ),
+
   body("gender").trim().notEmpty().withMessage(requiredMessage("Gender")),
+
   body("birthDay")
     .trim()
     .notEmpty()
@@ -66,6 +71,7 @@ const registerValidations = [
     .isInt({ min: MIN_MONTH_DAY, max: MAX_MONTH_DAY })
     .withMessage(invalidMessage("Birth Day"))
     .toInt(),
+
   body("birthMonth")
     .trim()
     .notEmpty()
@@ -73,6 +79,7 @@ const registerValidations = [
     .isInt({ min: MIN_MONTH, max: MAX_MONTH })
     .withMessage(invalidMessage("Birth Month"))
     .toInt(),
+
   body("birthYear")
     .trim()
     .notEmpty()
@@ -82,7 +89,11 @@ const registerValidations = [
     .toInt(),
 ];
 
-const validateDateOfBirth = ({ birthDay, birthMonth, birthYear }) => {
+const validateDateOfBirth = (
+  birthDay: number,
+  birthMonth: number,
+  birthYear: number
+) => {
   if (birthDay < MIN_MONTH_DAY || birthDay > MAX_MONTH_DAY) {
     return invalidMessage("Birth Day");
   }
@@ -108,7 +119,4 @@ const validateDateOfBirth = ({ birthDay, birthMonth, birthYear }) => {
   return null;
 };
 
-module.exports = {
-  registerValidations,
-  validateDateOfBirth,
-};
+export { registerValidations, validateDateOfBirth };
