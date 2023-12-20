@@ -1,10 +1,13 @@
-const asyncHandler = require("express-async-handler");
+import { Response } from "express";
+import asyncHandler from "express-async-handler";
 
-const User = require("../models/user");
+import { CustomRequest } from "../types";
+import { checkIncludeId } from "../utils";
+import User from "../models/user";
 
 /* Follow a user */
-const follow = asyncHandler(async (req, res) => {
-  const currentUser = req.user;
+const follow = asyncHandler(async (req: CustomRequest, res: Response) => {
+  const currentUser = req.user!;
   const currentUserId = currentUser._id.toString();
   const otherUserId = req.params.userId;
 
@@ -13,7 +16,8 @@ const follow = asyncHandler(async (req, res) => {
     throw new Error("You can't follow yourself!");
   }
 
-  if (currentUser.following.includes(otherUserId)) {
+  // Check 'following' list of current user
+  if (checkIncludeId(currentUser.following, otherUserId)) {
     res.status(403);
     throw new Error("You already followed this user!");
   }
@@ -31,12 +35,12 @@ const follow = asyncHandler(async (req, res) => {
   // Update 'followers' array of the other user
   await otherUser.updateOne({ $push: { followers: currentUserId } });
 
-  res.json({ followed: otherUserId });
+  res.json({ message: "Success" });
 });
 
 /* Unfollow a user */
-const unfollow = asyncHandler(async (req, res) => {
-  const currentUser = req.user;
+const unfollow = asyncHandler(async (req: CustomRequest, res: Response) => {
+  const currentUser = req.user!;
   const currentUserId = currentUser._id.toString();
   const otherUserId = req.params.userId;
 
@@ -45,7 +49,7 @@ const unfollow = asyncHandler(async (req, res) => {
     throw new Error("You can't unfollow yourself!");
   }
 
-  if (!currentUser.following.includes(otherUserId)) {
+  if (!checkIncludeId(currentUser.following, otherUserId)) {
     res.status(403);
     throw new Error("You haven't followed this user!");
   }
@@ -55,12 +59,9 @@ const unfollow = asyncHandler(async (req, res) => {
 
   // Update 'followers' array of the other user
   const otherUser = await User.findById(otherUserId);
-  await otherUser.updateOne({ $pull: { followers: currentUserId } });
+  await otherUser!.updateOne({ $pull: { followers: currentUserId } });
 
-  res.json({ unfollowed: otherUserId });
+  res.json({ message: "Success" });
 });
 
-module.exports = {
-  follow,
-  unfollow,
-};
+export { follow, unfollow };
