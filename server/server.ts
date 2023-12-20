@@ -1,12 +1,12 @@
-const express = require("express");
-const cors = require("cors");
-const cookieParser = require("cookie-parser");
-const dotenv = require("dotenv");
+import express from "express";
+import cors from "cors";
+import cookieParser from "cookie-parser";
+import dotenv from "dotenv";
 
-const connectDB = require("./config/db");
-const errorHandler = require("./middlewares/error");
-const authRouter = require("./routes/auth");
-const userRouter = require("./routes/user");
+import connectDB from "./config/db";
+import errorHandler from "./middlewares/error";
+import authRouter from "./routes/auth";
+import userRouter from "./routes/user";
 
 dotenv.config();
 connectDB(); // connect to database
