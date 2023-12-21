@@ -15,8 +15,8 @@ const router = Router();
 
 router.use(protect);
 
-router.get("/:userId", friendList);
-router.get("/:userId/requests", requestList);
+router.get("/", friendList);
+router.get("/requests", requestList);
 
 router.put("/:userId/sendRequest", sendRequest);
 router.put("/:userId/cancelRequest", cancelRequest);

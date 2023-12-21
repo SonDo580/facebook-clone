@@ -6,9 +6,14 @@ import { CustomRequest } from "../types";
 import { checkIncludeId } from "../utils";
 
 /* Get list of friends */
-const friendList = asyncHandler(
-  async (req: CustomRequest, res: Response) => {}
-);
+const friendList = asyncHandler(async (req: CustomRequest, res: Response) => {
+  const currentUser = req.user!;
+  await currentUser.populate({
+    path: "friends.user",
+    select: "firstName lastName profilePicture",
+  });
+  res.json(currentUser.friends);
+});
 
 /* Get list of friend requests */
 const requestList = asyncHandler(
