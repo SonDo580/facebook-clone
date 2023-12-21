@@ -7,6 +7,7 @@ import connectDB from "./config/db";
 import errorHandler from "./middlewares/error";
 import authRouter from "./routes/auth";
 import userRouter from "./routes/user";
+import friendRouter from "./routes/friend";
 
 dotenv.config();
 connectDB(); // connect to database
@@ -21,8 +22,9 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
+app.use("/friends", friendRouter);
 
-// Handle error
+// Custom error handling
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
