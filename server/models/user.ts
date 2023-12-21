@@ -4,6 +4,13 @@ import {
   RELATIONSHIP_STATUSES,
   FAMILY_RELATIONSHIPS,
 } from "../constants/relationships";
+import {
+  MAX_MONTH,
+  MAX_MONTH_DAY,
+  MIN_MONTH,
+  MIN_MONTH_DAY,
+  NAME_MAX_LENGTH,
+} from "../constants";
 
 type DocId = Types.ObjectId;
 
@@ -70,32 +77,43 @@ const userSchema = new Schema<UserDoc>(
     firstName: {
       type: String,
       required: true,
+      trim: true,
+      maxlength: NAME_MAX_LENGTH,
     },
     lastName: {
       type: String,
       required: true,
+      trim: true,
+      maxlength: NAME_MAX_LENGTH,
     },
     username: {
       type: String,
       required: true,
       unique: true,
+      trim: true,
     },
     email: {
       type: String,
       required: true,
       unique: true,
+      trim: true,
     },
     password: {
       type: String,
       required: true,
+      trim: true,
     },
     birthDay: {
       type: Number,
       required: true,
+      min: MIN_MONTH_DAY,
+      max: MAX_MONTH_DAY,
     },
     birthMonth: {
       type: Number,
       required: true,
+      min: MIN_MONTH,
+      max: MAX_MONTH,
     },
     birthYear: {
       type: Number,
@@ -104,6 +122,7 @@ const userSchema = new Schema<UserDoc>(
     gender: {
       type: String,
       required: true,
+      trim: true,
     },
     verified: {
       type: Boolean,
@@ -112,10 +131,12 @@ const userSchema = new Schema<UserDoc>(
     profilePicture: {
       type: String,
       default: "",
+      trim: true,
     },
     coverPhoto: {
       type: String,
       default: "",
+      trim: true,
     },
     followers: [
       {
@@ -159,10 +180,12 @@ const userSchema = new Schema<UserDoc>(
     details: {
       bio: {
         type: String,
+        trim: true,
       },
       otherNames: [
         {
           type: String,
+          trim: true,
         },
       ],
       workplaces: {
@@ -176,9 +199,11 @@ const userSchema = new Schema<UserDoc>(
       },
       currentCity: {
         type: String,
+        trim: true,
       },
       hometown: {
         type: String,
+        trim: true,
       },
       relationshipStatus: {
         type: String,
@@ -199,21 +224,25 @@ const userSchema = new Schema<UserDoc>(
       websites: [
         {
           type: String,
+          trim: true,
         },
       ],
       socialLinks: [
         {
           type: String,
+          trim: true,
         },
       ],
       languages: [
         {
           type: String,
+          trim: true,
         },
       ],
       favoriteQuotes: [
         {
           type: String,
+          trim: true,
         },
       ],
     },
