@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs";
 
 import User from "../models/user";
 import { CustomRequest } from "../types";
-import { registerValidations, validateDateOfBirth } from "../validations/auth";
+import { registerValidations, validateDateOfBirth } from "../validations/user";
 import {
   getUserInfo,
   getHashedPassword,
