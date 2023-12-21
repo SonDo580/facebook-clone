@@ -96,7 +96,7 @@ const friendRequest = asyncHandler(
 
     // Check if otherUser requested to be friend with currentUser
     if (checkIncludeId(otherUser.friendRequestsOut, currentUserId)) {
-      // Update 'friends' array of both users
+      // Add each user to 'friends' array of the other
       await currentUser.updateOne({
         $push: { friends: { user: otherUserId } },
       });
@@ -105,12 +105,12 @@ const friendRequest = asyncHandler(
         $push: { friends: { user: currentUserId } },
       });
 
-      // Update 'friendRequestsIn' array of currentUser
+      // Remove otherUser from 'friendRequestsIn' array of currentUser
       await otherUser.updateOne({
         $pull: { friendRequestsIn: otherUserId },
       });
 
-      // Update 'friendRequestsOut' array of otherUser
+      // Remove currentUser from 'friendRequestsOut' array of otherUser
       await otherUser.updateOne({
         $pull: { friendRequestsOut: currentUserId },
       });
@@ -119,10 +119,10 @@ const friendRequest = asyncHandler(
       return;
     }
 
-    // Update 'friendRequestsOut' array of current user
+    // Add otherUser to 'friendRequestsOut' array of currentUser
     await currentUser.updateOne({ $push: { friendRequestsOut: otherUserId } });
 
-    // Update 'friendRequestsIn' array of the other user
+    // Add currentUser to 'friendRequestsIn' array of otherUser
     await otherUser.updateOne({ $push: { friendRequestsIn: currentUserId } });
 
     res.json({ message: "Success" });
@@ -131,7 +131,30 @@ const friendRequest = asyncHandler(
 
 /* Cancel friend request*/
 const cancelFriendRequest = asyncHandler(
-  async (req: CustomRequest, res: Response) => {}
+  async (req: CustomRequest, res: Response) => {
+    const currentUser = req.user!;
+    const currentUserId = currentUser._id.toString();
+    const otherUserId = req.params.userId;
+
+    if (currentUserId === otherUserId) {
+      res.status(403);
+      throw new Error("Friend request to yourself is forbidden!");
+    }
+
+    if (!checkIncludeId(currentUser.friendRequestsOut, otherUserId)) {
+      res.status(403);
+      throw new Error("You haven't sent friend request to this user!");
+    }
+
+    // Remove otherUser from 'friendRequestsOut' array of currentUser
+    await currentUser.updateOne({ $pull: { friendRequestsOut: otherUserId } });
+
+    // Remove currentUser from 'friendRequestsIn' array of otherUser
+    const otherUser = await User.findById(otherUserId);
+    await otherUser!.updateOne({ $pull: { friendRequestsIn: currentUserId } });
+
+    res.json({ message: "Success" });
+  }
 );
 
 /* Accept friend request*/
@@ -152,7 +175,7 @@ const unfriend = asyncHandler(async (req: CustomRequest, res: Response) => {
 
   if (currentUserId === otherUserId) {
     res.status(403);
-    throw new Error("You unfriend yourself!");
+    throw new Error("You can't unfriend yourself!");
   }
 
   const friendList = currentUser.friends.map((friend) => friend.user);
@@ -161,7 +184,7 @@ const unfriend = asyncHandler(async (req: CustomRequest, res: Response) => {
     throw new Error("You and this user are not friends!");
   }
 
-  // Update 'friends' array of both users
+  // Remove each user from 'friends' array of the other
   await currentUser.updateOne({ $pull: { friends: { user: otherUserId } } });
 
   const otherUser = await User.findById(otherUserId);
