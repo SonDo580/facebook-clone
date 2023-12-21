@@ -12,13 +12,20 @@ const friendList = asyncHandler(async (req: CustomRequest, res: Response) => {
     path: "friends.user",
     select: "firstName lastName profilePicture",
   });
+
   res.json(currentUser.friends);
 });
 
 /* Get list of friend requests */
-const requestList = asyncHandler(
-  async (req: CustomRequest, res: Response) => {}
-);
+const requestList = asyncHandler(async (req: CustomRequest, res: Response) => {
+  const currentUser = req.user!;
+  await currentUser.populate({
+    path: "friendRequestsIn",
+    select: "firstName lastName profilePicture",
+  });
+
+  res.json(currentUser.friendRequestsIn);
+});
 
 /* Send friend request */
 const sendRequest = asyncHandler(async (req: CustomRequest, res: Response) => {
