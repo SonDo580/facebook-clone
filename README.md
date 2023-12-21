@@ -10,23 +10,26 @@ Frontend not implemented yet.
 
 1. **Implemented**
 
-- (BE) User authentication: registration and login.
+- (BE) Authentication: registration and login.
+- (BE) User management: get user info, update user info, delete account
 - (BE) Follow and unfollow people.
+- (BE) Friend system: friend list, friend request list, send/receive/cancel/accept/reject friend requests, unfriend.
 
 2. **In progress**
 
-- (BE) Friend system: send/receive/cancel/accept/reject friend requests, unfriend
+- (BE) Post management: create/edit/delete post, post list
 
 ## Technologies Used
 
 1. **Frontend**
 
 - ReactJS
-- Sass
-- Plan to add: Axios, Redux
+- Network request: Axios
+- State management: Redux, Redux Saga
 
 2. **Backend**
 
-- NodeJS - Express
+- NodeJS + Express
 - Database: MongoDB
+- Validation: Express Validator
 - Authentication: JSON Web Token
