@@ -108,7 +108,41 @@ const cancelRequest = asyncHandler(
 
 /* Accept friend request*/
 const acceptRequest = asyncHandler(
-  async (req: CustomRequest, res: Response) => {}
+  async (req: CustomRequest, res: Response) => {
+    const currentUser = req.user!;
+    const currentUserId = currentUser._id.toString();
+    const otherUserId = req.params.userId;
+
+    if (currentUserId === otherUserId) {
+      res.status(403);
+      throw new Error("Friend request to yourself is forbidden!");
+    }
+
+    if (!checkIncludeId(currentUser.friendRequestsIn, otherUserId)) {
+      res.status(403);
+      throw new Error("You haven't received friend request from this user!");
+    }
+
+    // Find the other user
+    const otherUser = await User.findById(otherUserId);
+
+    // Add each user to "friends" array of the other
+    await currentUser.updateOne({
+      $push: { friends: { user: otherUserId } },
+    });
+
+    await otherUser!.updateOne({
+      $push: { friends: { user: currentUserId } },
+    });
+
+    // Remove otherUser from 'friendRequestsIn' array of currentUser
+    await currentUser.updateOne({ $pull: { friendRequestsIn: otherUserId } });
+
+    // Remove currentUser from 'friendRequestsOut' array of otherUser
+    await otherUser!.updateOne({ $pull: { friendRequestsOut: currentUserId } });
+
+    res.json({ message: "Success" });
+  }
 );
 
 /* Reject friend request*/
