@@ -190,7 +190,8 @@ const deleteAccount = asyncHandler(
       }
     );
 
-    // TODO: Remove references to user from posts
+    // TODO: Remove all user's posts
+    // TODO: Remove references to user from others' posts (reactions, comments)
 
     // Delete user
     await currentUser.deleteOne();

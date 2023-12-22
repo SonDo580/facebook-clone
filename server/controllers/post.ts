@@ -100,7 +100,7 @@ const deletePost = asyncHandler(async (req: CustomRequest, res: Response) => {
     throw new Error("You don't have permission to delete this post!");
   }
 
-  // Remove references to the post
+  // Remove references to the post from users
   await User.updateMany(
     {
       "savedPosts.post": postId,
@@ -111,6 +111,8 @@ const deletePost = asyncHandler(async (req: CustomRequest, res: Response) => {
       },
     }
   );
+
+  // TODO: Remove all post comments
 
   // Delete the post
   await post.deleteOne();
