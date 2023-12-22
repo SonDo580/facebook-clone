@@ -58,22 +58,24 @@ const sendRequest = asyncHandler(async (req: CustomRequest, res: Response) => {
 
   // Check if otherUser requested to be friend with currentUser
   if (checkIncludeId(otherUser.friendRequestsOut, currentUserId)) {
-    // Add each user to 'friends' array of the other
-    await currentUser.updateOne({
-      $push: { friends: { user: otherUserId } },
-    });
-
-    await otherUser.updateOne({
-      $push: { friends: { user: currentUserId } },
-    });
-
+    // Add each user to 'friends', 'following', 'followers' array of the other
     // Remove otherUser from 'friendRequestsIn' array of currentUser
-    await otherUser.updateOne({
+    // Remove currentUser from 'friendRequestsOut' array of otherUser
+    await currentUser.updateOne({
+      $push: {
+        friends: { user: otherUserId },
+        followers: otherUserId,
+        following: otherUserId,
+      },
       $pull: { friendRequestsIn: otherUserId },
     });
 
-    // Remove currentUser from 'friendRequestsOut' array of otherUser
     await otherUser.updateOne({
+      $push: {
+        friends: { user: currentUserId },
+        followers: currentUserId,
+        following: currentUserId,
+      },
       $pull: { friendRequestsOut: currentUserId },
     });
 
@@ -138,20 +140,26 @@ const acceptRequest = asyncHandler(
     // Find the other user
     const otherUser = await User.findById(otherUserId);
 
-    // Add each user to "friends" array of the other
+    // Add each user to 'friends', 'following', 'followers' array of the other
+    // Remove otherUser from 'friendRequestsIn' array of currentUser
+    // Remove currentUser from 'friendRequestsOut' array of otherUser
     await currentUser.updateOne({
-      $push: { friends: { user: otherUserId } },
+      $push: {
+        friends: { user: otherUserId },
+        followers: otherUserId,
+        following: otherUserId,
+      },
+      $pull: { friendRequestsIn: otherUserId },
     });
 
     await otherUser!.updateOne({
-      $push: { friends: { user: currentUserId } },
+      $push: {
+        friends: { user: currentUserId },
+        followers: currentUserId,
+        following: currentUserId,
+      },
+      $pull: { friendRequestsOut: currentUserId },
     });
-
-    // Remove otherUser from 'friendRequestsIn' array of currentUser
-    await currentUser.updateOne({ $pull: { friendRequestsIn: otherUserId } });
-
-    // Remove currentUser from 'friendRequestsOut' array of otherUser
-    await otherUser!.updateOne({ $pull: { friendRequestsOut: currentUserId } });
 
     res.json({ message: "Success" });
   }
@@ -202,11 +210,23 @@ const unfriend = asyncHandler(async (req: CustomRequest, res: Response) => {
     throw new Error("You and this user are not friends!");
   }
 
-  // Remove each user from 'friends' array of the other
-  await currentUser.updateOne({ $pull: { friends: { user: otherUserId } } });
+  // Remove each user from 'friends', 'following', 'followers' array of the other
+  await currentUser.updateOne({
+    $pull: {
+      friends: { user: otherUserId },
+      followers: otherUserId,
+      following: otherUserId,
+    },
+  });
 
   const otherUser = await User.findById(otherUserId);
-  await otherUser!.updateOne({ $pull: { friends: { user: currentUserId } } });
+  await otherUser!.updateOne({
+    $pull: {
+      friends: { user: currentUserId },
+      followers: currentUserId,
+      following: currentUserId,
+    },
+  });
 
   res.json({ message: "Success" });
 });
