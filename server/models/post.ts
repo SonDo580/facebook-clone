@@ -32,6 +32,7 @@ const postSchema = new Schema<PostDoc>(
     images: [
       {
         type: String,
+        required: true,
       },
     ],
     reactions: [
