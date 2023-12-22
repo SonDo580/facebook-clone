@@ -6,6 +6,7 @@ import User from "../models/user";
 import { CustomRequest } from "../types";
 import { checkIncludeId } from "../utils";
 import { getHashedPassword } from "../utils/auth";
+import { processUpdatedUserInfo } from "../utils/user";
 import {
   updateUserValidations,
   validateDateOfBirth,
@@ -71,6 +72,7 @@ const unfollow = asyncHandler(async (req: CustomRequest, res: Response) => {
 });
 
 /* Get user info */
+// TODO: only return public fields (user can set visibility for fields)
 const getInfo = asyncHandler(async (req: CustomRequest, res: Response) => {});
 
 /* Update user info */
@@ -125,6 +127,9 @@ const updateInfo = [
       req.body.password = await getHashedPassword(password);
     }
 
+    // Remove fields that need their own handlers;
+    processUpdatedUserInfo(req.body);
+
     // Update user info
     const updatedUser = await User.findByIdAndUpdate(
       req.params.userId,
@@ -137,6 +142,7 @@ const updateInfo = [
 ];
 
 /* Delete account */
+// TODO: Remove references to user from posts
 const deleteAccount = asyncHandler(
   async (req: CustomRequest, res: Response) => {
     const currentUser = req.user!;
@@ -169,8 +175,6 @@ const deleteAccount = asyncHandler(
         },
       }
     );
-
-    // TODO: Remove references to this user in posts
 
     // Delete user
     await currentUser.deleteOne();
