@@ -5,7 +5,7 @@ import { validationResult } from "express-validator";
 import User from "../models/user";
 import { CustomRequest } from "../types";
 import { checkIncludeId } from "../utils";
-import { getHashedPassword } from "../utils/auth";
+import { getHashedPassword, getUserInfo } from "../utils/auth";
 import { processUpdatedUserInfo } from "../utils/user";
 import {
   updateUserValidations,
@@ -72,8 +72,23 @@ const unfollow = asyncHandler(async (req: CustomRequest, res: Response) => {
 });
 
 /* Get user info */
-// TODO: only return public fields (user can set visibility for fields)
-const getInfo = asyncHandler(async (req: CustomRequest, res: Response) => {});
+const getInfo = asyncHandler(async (req: CustomRequest, res: Response) => {
+  const currentUser = req.user!;
+  const user = await User.findById(req.params.userId);
+  if (!user) {
+    res.status(400);
+    throw new Error("User not found!");
+  }
+
+  if (currentUser._id.toString() === req.params.userId) {
+    // Return all fields except password for current user
+    res.json(getUserInfo(user));
+    return;
+  }
+
+  // TODO: Only return public fields for other user
+  res.json(getUserInfo(user));
+});
 
 /* Update user info */
 const updateInfo = [
@@ -142,7 +157,6 @@ const updateInfo = [
 ];
 
 /* Delete account */
-// TODO: Remove references to user from posts
 const deleteAccount = asyncHandler(
   async (req: CustomRequest, res: Response) => {
     const currentUser = req.user!;
@@ -175,6 +189,8 @@ const deleteAccount = asyncHandler(
         },
       }
     );
+
+    // TODO: Remove references to user from posts
 
     // Delete user
     await currentUser.deleteOne();
