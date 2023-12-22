@@ -9,4 +9,13 @@ const createPostValidations = [
     .escape(),
 ];
 
-export { createPostValidations };
+const updatePostValidations = [
+  body("content")
+    .if((_, { req }) => req.body.content !== undefined)
+    .trim()
+    .notEmpty()
+    .withMessage(requiredMessage("Post content"))
+    .escape(),
+];
+
+export { createPostValidations, updatePostValidations };

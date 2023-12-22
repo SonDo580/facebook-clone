@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 import protect from "../middlewares/protect";
-import { createPost } from "../controllers/post";
+import { createPost, updatePost } from "../controllers/post";
 
 const router = Router();
 
@@ -15,7 +15,7 @@ router
 router
   .route("/:postId")
   .get(() => {})
-  .put(() => {})
+  .put(updatePost)
   .delete(() => {});
 
 export default router;
