@@ -8,6 +8,7 @@ import errorHandler from "./middlewares/error";
 import authRouter from "./routes/auth";
 import userRouter from "./routes/user";
 import friendRouter from "./routes/friend";
+import postRouter from "./routes/post";
 
 dotenv.config();
 connectDB(); // connect to database
@@ -23,6 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
 app.use("/friends", friendRouter);
+app.use("/posts", postRouter);
 
 // Custom error handling
 app.use(errorHandler);
