@@ -9,7 +9,11 @@ router.use(protect);
 router
   .route("/")
   .get(() => {})
-  .post(() => {})
+  .post(() => {});
+
+router
+  .route("/:postId")
+  .get(() => {})
   .put(() => {})
   .delete(() => {});
 
