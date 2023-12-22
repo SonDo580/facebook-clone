@@ -138,7 +138,44 @@ const updateInfo = [
 
 /* Delete account */
 const deleteAccount = asyncHandler(
-  async (req: CustomRequest, res: Response) => {}
+  async (req: CustomRequest, res: Response) => {
+    const currentUser = req.user!;
+    const userId = req.params.userId;
+    if (currentUser._id.toString() !== userId) {
+      res.status(403);
+      throw new Error("You can't delete other account!");
+    }
+
+    // Remove references to this user from other users
+    await User.updateMany(
+      {
+        $or: [
+          { followers: userId },
+          { following: userId },
+          { "friends.user": userId },
+          { friendRequestsIn: userId },
+          { friendRequestsOut: userId },
+          { "details.familyMembers.user": userId },
+        ],
+      },
+      {
+        $pull: {
+          followers: userId,
+          following: userId,
+          friends: { user: userId },
+          friendRequestsIn: userId,
+          friendRequestsOut: userId,
+          "details.familyMembers": { user: userId },
+        },
+      }
+    );
+
+    // TODO: Remove references to this user in posts
+
+    // Delete user
+    await currentUser.deleteOne();
+    res.json({ message: "Success" });
+  }
 );
 
 export { follow, unfollow, getInfo, updateInfo, deleteAccount };
