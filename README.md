@@ -2,10 +2,6 @@
 
 A social media application that replicates some of the features of Facebook. It provides users a platform to connect, share, and engage with friends and family.
 
-## Note
-
-Frontend not implemented yet.
-
 ## Features
 
 1. **Implemented**
@@ -17,7 +13,8 @@ Frontend not implemented yet.
 
 2. **In progress**
 
-- (BE) Post management: create/edit/delete post, post list
+- (FE) User authentication, Registration and Login form.
+- (BE) Post management: create/edit/delete post, post list.
 
 ## Technologies Used
 
