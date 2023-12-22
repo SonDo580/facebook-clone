@@ -119,4 +119,31 @@ const deletePost = asyncHandler(async (req: CustomRequest, res: Response) => {
   res.json({ message: "Success" });
 });
 
-export { createPost, updatePost, deletePost };
+/* Get a post */
+const getPost = asyncHandler(async (req: CustomRequest, res: Response) => {
+  const post = await Post.findById(req.params.postId);
+  if (!post) {
+    res.status(400);
+    throw new Error("Post not found!");
+  }
+  res.json(post);
+});
+
+/* Get list of posts */
+const postList = asyncHandler(async (req: CustomRequest, res: Response) => {
+  const currentUser = req.user!;
+
+  // Find posts by currentUser
+  const userPosts = await Post.find({ author: currentUser._id });
+
+  // Find posts by people that currentUser is following
+  const followingPosts = await Post.find({
+    author: { $in: currentUser.following },
+  });
+
+  res.json([...userPosts, ...followingPosts]);
+});
+
+/* React to a post */
+
+export { createPost, updatePost, deletePost, getPost, postList };

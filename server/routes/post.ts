@@ -1,21 +1,20 @@
 import { Router } from "express";
 
 import protect from "../middlewares/protect";
-import { createPost, deletePost, updatePost } from "../controllers/post";
+import {
+  createPost,
+  deletePost,
+  getPost,
+  postList,
+  updatePost,
+} from "../controllers/post";
 
 const router = Router();
 
 router.use(protect);
 
-router
-  .route("/")
-  .get(() => {})
-  .post(createPost);
+router.route("/").get(postList).post(createPost);
 
-router
-  .route("/:postId")
-  .get(() => {})
-  .put(updatePost)
-  .delete(deletePost);
+router.route("/:postId").get(getPost).put(updatePost).delete(deletePost);
 
 export default router;
