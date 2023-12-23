@@ -9,6 +9,7 @@ import {
   createPostValidations,
   updatePostValidations,
 } from "../validations/post";
+import { REACTIONS } from "../constants/reactions";
 
 /* Create new post */
 const createPost = [
@@ -145,5 +146,50 @@ const postList = asyncHandler(async (req: CustomRequest, res: Response) => {
 });
 
 /* React to a post */
+const reactToPost = asyncHandler(async (req: CustomRequest, res: Response) => {
+  // Find the post
+  const postId = req.params.postId;
+  const post = await Post.findById(postId);
+  if (!post) {
+    res.status(400);
+    throw new Error("Post not found!");
+  }
 
-export { createPost, updatePost, deletePost, getPost, postList };
+  const userId = req.user!._id;
+  const { reactionType } = req.body;
+
+  // Remove user reaction if reactionType is null
+  if (reactionType === null) {
+    await post.updateOne({ $pull: { reactions: { user: userId } } });
+    res.json({ message: "Success" });
+    return;
+  }
+
+  // Check if the reaction is valid
+  if (!REACTIONS.includes(reactionType)) {
+    res.status(400);
+    throw new Error("Invalid reaction!");
+  }
+
+  const reacted = await Post.exists({
+    _id: postId,
+    "reactions.user": userId,
+  });
+
+  if (!reacted) {
+    // Add user reaction
+    await post.updateOne({
+      $push: { reactions: { user: userId, reactionType } },
+    });
+  } else {
+    // Update user reaction
+    await post.updateOne(
+      { $set: { "reactions.$[elem].reactionType": reactionType } },
+      { arrayFilters: [{ "elem.user": userId }] }
+    );
+  }
+
+  res.json({ message: "Success" });
+});
+
+export { createPost, updatePost, deletePost, getPost, postList, reactToPost };
