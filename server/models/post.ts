@@ -42,13 +42,11 @@ const postSchema = new Schema<PostDoc>(
           enum: REACTIONS,
           required: true,
         },
-        users: [
-          {
-            type: ObjectId,
-            ref: "User",
-            required: true,
-          },
-        ],
+        user: {
+          type: ObjectId,
+          ref: "User",
+          required: true,
+        },
       },
     ],
   },
