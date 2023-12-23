@@ -4,6 +4,7 @@ import {
   RELATIONSHIP_STATUSES,
   FAMILY_RELATIONSHIPS,
 } from "../constants/relationships";
+import { GENDERS } from "../constants/genders";
 import {
   MAX_MONTH,
   MAX_MONTH_DAY,
@@ -123,6 +124,7 @@ const userSchema = new Schema<UserDoc>(
       type: String,
       required: true,
       trim: true,
+      enum: GENDERS,
     },
     verified: {
       type: Boolean,
