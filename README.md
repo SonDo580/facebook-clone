@@ -10,12 +10,12 @@ A social media application that replicates some of the features of Facebook. It 
 - (BE) User management: get user info, update user info, delete account
 - (BE) Follow and unfollow people.
 - (BE) Friend system: friend list, friend request list, send/receive/cancel/accept/reject friend requests, unfriend.
-- (BE) Post management: create/get/update/delete post, post list.
+- (BE) Post management: create/get/update/delete post, post list, reactions
 
 2. **In progress**
 
 - (FE) User authentication, Registration and Login form.
-- (BE) Post management: reactions, comments
+- (BE) Post management: comments
 
 ## Technologies Used
 
