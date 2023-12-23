@@ -1,4 +1,4 @@
-import { ValidationChain, body } from "express-validator";
+import { body } from "express-validator";
 
 import {
   NAME_MAX_LENGTH,
@@ -10,13 +10,14 @@ import {
   MAX_MONTH,
   MAX_AGE,
 } from "../constants";
+import { GENDERS } from "../constants/genders";
 import {
   requiredMessage,
   lengthMessage,
   invalidMessage,
 } from "../utils/message";
 
-const registerValidations: ValidationChain[] = [
+const registerValidations = [
   body("firstName")
     .trim()
     .notEmpty()
@@ -62,7 +63,12 @@ const registerValidations: ValidationChain[] = [
       "Password must contains both uppercase letters, lowecase letters, numbers, symbols!"
     ),
 
-  body("gender").trim().notEmpty().withMessage(requiredMessage("Gender")),
+  body("gender")
+    .trim()
+    .notEmpty()
+    .withMessage(requiredMessage("Gender"))
+    .custom((value) => GENDERS.includes(value))
+    .withMessage(invalidMessage("Gender")),
 
   body("birthDay")
     .trim()
@@ -143,7 +149,9 @@ const updateUserValidations = [
     .if((_, { req }) => req.body.gender !== undefined)
     .trim()
     .notEmpty()
-    .withMessage(requiredMessage("Gender")),
+    .withMessage(requiredMessage("Gender"))
+    .custom((value) => GENDERS.includes(value))
+    .withMessage(invalidMessage("Gender")),
 
   body("birthDay")
     .if((_, { req }) => req.body.birthDay !== undefined)
