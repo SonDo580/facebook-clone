@@ -57,9 +57,9 @@ function Login() {
         </form>
 
         <hr />
-        <Link className="register" to={PATHS.register}>
-          Create new account
-        </Link>
+        <div className="buttonContainer">
+          <Link to={PATHS.register}>Create new account</Link>
+        </div>
       </div>
     </div>
   );

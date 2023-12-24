@@ -35,6 +35,10 @@ function Register() {
   return (
     <div className="register">
       <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="logo">
+          <img src="/facebook.svg" alt="facebook" />
+        </div>
+
         <div className="formGroup">
           <div className="inputGroup">
             <input
@@ -81,54 +85,57 @@ function Register() {
           )}
         </div>
 
-        <label>Date of birth</label>
-        <div className="formGroup">
-          <select {...register("birthDay")}>
-            {days.map((day) => (
-              <option key={day} value={day}>
-                {day}
-              </option>
-            ))}
-          </select>
+        <div>
+          <p className="field">Date of birth</p>
+          <div className="formGroup">
+            <select {...register("birthDay")}>
+              {days.map((day) => (
+                <option key={day} value={day}>
+                  {day}
+                </option>
+              ))}
+            </select>
 
-          <select {...register("birthMonth")}>
-            {months.map((month) => (
-              <option key={month} value={Month[month as keyof typeof Month]}>
-                {month}
-              </option>
-            ))}
-          </select>
+            <select {...register("birthMonth")}>
+              {months.map((month) => (
+                <option key={month} value={Month[month as keyof typeof Month]}>
+                  {month}
+                </option>
+              ))}
+            </select>
 
-          <select {...register("birthYear")}>
-            {years.map((year) => (
-              <option key={year} value={year}>
-                {year}
-              </option>
-            ))}
-          </select>
+            <select {...register("birthYear")}>
+              {years.map((year) => (
+                <option key={year} value={year}>
+                  {year}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
-        <label>Gender</label>
-        {errors.gender && <p className="error">{errors.gender.message}</p>}
-        <div className="formGroup">
-          {Object.keys(Gender).map((gender) => (
-            <div key={gender} className="option">
-              <span>{gender}</span>
-              <input
-                type="radio"
-                value={gender}
-                {...register("gender", { required: "Gender is required!" })}
-              />
-            </div>
-          ))}
+        <div>
+          <p className="field">Gender</p>
+          {errors.gender && <p className="error">{errors.gender.message}</p>}
+          <div className="formGroup">
+            {Object.keys(Gender).map((gender) => (
+              <label key={gender} className="option">
+                <span>{gender}</span>
+                <input
+                  type="radio"
+                  value={gender}
+                  {...register("gender", { required: "Gender is required!" })}
+                />
+              </label>
+            ))}
+          </div>
         </div>
 
         <button>Sign up</button>
+        <p>
+          Already had an account? <Link to={PATHS.login}>Log in here</Link>
+        </p>
       </form>
-
-      <p>
-        Already had an account? <Link to={PATHS.login}>Log in here</Link>
-      </p>
     </div>
   );
 }

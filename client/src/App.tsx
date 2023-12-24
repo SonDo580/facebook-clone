@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 
 import { PROTECTED_ROUTES, PUBLIC_ROUTES } from "./config/routes";
 import AuthCheck from "./common/AuthCheck";
+import "./App.scss";
 
 function App() {
   return (
