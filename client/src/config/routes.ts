@@ -1,7 +1,7 @@
+import Home from "@/pages/Home";
+import Login from "@/pages/Login";
+import Register from "@/pages/Register";
 import { PATHS } from "./paths";
-import Home from "../pages/Home";
-import Login from "../pages/Login";
-import Register from "../pages/Register";
 
 const PUBLIC_ROUTES = [
   {

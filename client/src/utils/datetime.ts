@@ -1,4 +1,4 @@
-import { MAX_AGE, Month } from "../constants";
+import { MAX_AGE, Month } from "@/constants";
 
 // Get string keys of Month enum
 const getStringMonths = () =>

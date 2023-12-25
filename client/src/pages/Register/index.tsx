@@ -1,9 +1,9 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
-import { PATHS } from "../../config/paths";
-import { Gender, Month } from "../../constants";
-import { getDays, getStringMonths, getYears } from "../../utils/datetime";
+import { PATHS } from "@/config/paths";
+import { getDays, getStringMonths, getYears } from "@/utils/datetime";
+import { Gender, Month } from "@/constants";
 import "./style.scss";
 
 type FormFields = {

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-import { PATHS } from "../../config/paths";
+import { PATHS } from "@/config/paths";
 import "./style.scss";
 
 type FormFields = {

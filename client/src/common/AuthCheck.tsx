@@ -1,5 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { PATHS } from "../config/routes";
+
+import { PATHS } from "@/config/routes";
 
 function AuthCheck() {
   // TODO: Check if user already logged in
