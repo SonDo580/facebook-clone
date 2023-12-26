@@ -2,8 +2,9 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
 import { PATHS } from "@/config/paths";
-import { getDays, getStringMonths, getYears } from "@/utils/datetime";
 import { Gender, Month } from "@/constants";
+import { getDays, getStringMonths, getYears } from "@/utils/datetime";
+import { registerOptions } from "./validation";
 import "./style.scss";
 
 type FormFields = {
@@ -43,9 +44,7 @@ function Register() {
           <div className="inputGroup">
             <input
               placeholder="First name"
-              {...register("firstName", {
-                required: "First name is required!",
-              })}
+              {...register("firstName", registerOptions.firstName)}
             />
             {errors.firstName && (
               <p className="error">{errors.firstName.message}</p>
@@ -55,9 +54,7 @@ function Register() {
           <div className="inputGroup">
             <input
               placeholder="Last name"
-              {...register("lastName", {
-                required: "Last name is required!",
-              })}
+              {...register("lastName", registerOptions.lastName)}
             />
             {errors.lastName && (
               <p className="error">{errors.lastName.message}</p>
@@ -69,7 +66,7 @@ function Register() {
           <input
             type="email"
             placeholder="Email"
-            {...register("email", { required: "Email is required!" })}
+            {...register("email", registerOptions.email)}
           />
           {errors.email && <p className="error">{errors.email.message}</p>}
         </div>
@@ -78,7 +75,7 @@ function Register() {
           <input
             type="password"
             placeholder="Password"
-            {...register("password", { required: "Password is required!" })}
+            {...register("password", registerOptions.password)}
           />
           {errors.password && (
             <p className="error">{errors.password.message}</p>
@@ -124,7 +121,7 @@ function Register() {
                 <input
                   type="radio"
                   value={gender}
-                  {...register("gender", { required: "Gender is required!" })}
+                  {...register("gender", registerOptions.gender)}
                 />
               </label>
             ))}
