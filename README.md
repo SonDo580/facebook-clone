@@ -6,16 +6,21 @@ A social media application that replicates some of the features of Facebook. It 
 
 1. **Implemented**
 
-- (BE) Authentication: registration and login.
+- (BE) Authentication: register, login, logout.
 - (BE) User management: get user info, update user info, delete account
 - (BE) Follow and unfollow people.
-- (BE) Friend: friend list, friend request list, send/receive/cancel/accept/reject friend requests, unfriend.
+- (BE) Friend: friend list, friend request list, send/cancel/accept/reject friend requests, unfriend.
 - (BE) Post: create/get/update/delete post, post list, react to post.
+- (FE) Register and Login forms, frontend validation
 
 2. **In progress**
 
-- (FE) User authentication, Registration and Login form.
-- (BE) Comment: add/edit/delete comment, comment list, react to comment.
+- (FE) Building the UI for the Home page
+
+3. **Todo**
+
+- (FE) Integrate with BE
+- (BE) Comment: add/edit/delete comment, comment list, react and reply to comment.
 
 ## Technologies Used
 
