@@ -1,3 +1,10 @@
+import { useState } from "react";
+
+import { SlLike } from "react-icons/sl";
+import { FaRegComment } from "react-icons/fa";
+import { PiShareFat } from "react-icons/pi";
+
+import { Reaction } from "@/constants";
 import { getTimeAgo } from "@/utils/datetime";
 
 type Author = {
@@ -21,6 +28,15 @@ function Post({ post }: Props) {
   const { author, content, updatedAt } = post;
   const { lastName, firstName, profile } = author;
 
+  const [expanded, setExpanded] = useState(false);
+  const toggleContent = () => {
+    setExpanded((expanded) => !expanded);
+  };
+
+  const reactToPost = (reaction: Reaction) => {
+    console.log(reaction);
+  };
+
   return (
     <div className="post">
       <div className="info">
@@ -35,7 +51,36 @@ function Post({ post }: Props) {
         </div>
       </div>
 
-      <p className="content">{content}</p>
+      <p className="content">
+        {expanded ? content : `${content.slice(0, 1000)}...`}
+
+        <button onClick={toggleContent} className="contentControl">
+          {expanded ? "See less" : "See more"}
+        </button>
+      </p>
+
+      <ul className="interact">
+        <li className="react">
+          <SlLike />
+          <span>Like</span>
+
+          <ul className="reacts">
+            {(Object.keys(Reaction) as Reaction[]).map((reaction) => (
+              <li key={reaction} onClick={() => reactToPost(reaction)}>
+                <img src={`/reactions/${reaction}.gif`} alt={reaction} />
+              </li>
+            ))}
+          </ul>
+        </li>
+        <li className="todo">
+          <FaRegComment />
+          <span>Comment</span>
+        </li>
+        <li className="todo">
+          <PiShareFat />
+          <span>Share</span>
+        </li>
+      </ul>
     </div>
   );
 }

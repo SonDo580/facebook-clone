@@ -1,3 +1,12 @@
+enum Reaction {
+  like = "like",
+  love = "love",
+  haha = "haha",
+  wow = "wow",
+  sad = "sad",
+  angry = "angry",
+}
+
 enum Gender {
   Male = "Male",
   Female = "Female",
@@ -27,6 +36,7 @@ const PASSWORD_MAX_LENGTH = 40;
 export {
   Month,
   Gender,
+  Reaction,
   MAX_AGE,
   NAME_MAX_LENGTH,
   PASSWORD_MAX_LENGTH,
