@@ -2,21 +2,19 @@ import { RegisterOptions } from "react-hook-form";
 
 const requiredMessage = (name: string) => `${name} is required!`;
 
-const minLengthMessage = (name: string, value: number) => {
-  return `${name} must contains at least ${value} characters!`;
-};
+const minLengthMessage = (name: string, value: number) =>
+  `${name} must contains at least ${value} characters!`;
 
-const maxLengthMessage = (name: string, value: number) => {
-  return `${name} must contains at most ${value} characters!`;
-};
+const maxLengthMessage = (name: string, value: number) =>
+  `${name} must contains at most ${value} characters!`;
 
-const minMessage = (name: string, value: number) => {
-  return `${name} must be at least ${value}!`;
-};
+const minMessage = (name: string, value: number) =>
+  `${name} must be at least ${value}!`;
 
-const maxMessage = (name: string, value: number) => {
-  return `${name} must be at most ${value}!`;
-};
+const maxMessage = (name: string, value: number) =>
+  `${name} must be at most ${value}!`;
+
+const trimMessage = (name: string) => `${name} must not contain all spaces!`;
 
 type NumberRule = "minLength" | "maxLength" | "min" | "max";
 
@@ -29,12 +27,20 @@ const MESSAGE_FUNCTIONS = {
 
 const numberRuleKeys = Object.keys(MESSAGE_FUNCTIONS) as NumberRule[];
 
+type CustomRegisterOptions = RegisterOptions & { trim?: true };
+
 const getFieldRegisterOptions = (
   displayName: string,
-  rules: RegisterOptions
+  rules: CustomRegisterOptions
 ): RegisterOptions => {
   if (rules.required === true) {
     rules.required = requiredMessage(displayName);
+  }
+
+  if (rules.trim === true) {
+    delete rules.trim;
+    rules.validate = (value) =>
+      value.trim().length !== 0 || trimMessage(displayName);
   }
 
   for (const key of numberRuleKeys) {
@@ -53,7 +59,7 @@ const getFieldRegisterOptions = (
 type AllFieldValidations = {
   [field: string]: {
     displayName: string;
-    rules: RegisterOptions;
+    rules: CustomRegisterOptions;
   };
 };
 

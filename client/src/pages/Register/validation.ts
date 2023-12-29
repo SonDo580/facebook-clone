@@ -12,6 +12,7 @@ const registerOptions = getRegisterOptions({
     displayName: "First name",
     rules: {
       required: true,
+      trim: true,
       maxLength: NAME_MAX_LENGTH,
     },
   },
@@ -19,6 +20,7 @@ const registerOptions = getRegisterOptions({
     displayName: "Last name",
     rules: {
       required: true,
+      trim: true,
       maxLength: NAME_MAX_LENGTH,
     },
   },
