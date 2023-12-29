@@ -1,0 +1,47 @@
+.feed .posts {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.feed .post {
+  background-color: white;
+  box-shadow: 0 0 5px #ced0d4;
+  border-radius: 10px;
+  padding: 15px;
+
+  .info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    img {
+      width: 50px;
+      aspect-ratio: 1 / 1;
+      border: 1px solid #ced0d4;
+      border-radius: 50%;
+      object-fit: contain;
+    }
+
+    .text {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .name {
+      font-weight: bold;
+    }
+
+    .time {
+      font-weight: 300;
+      font-size: 0.9rem;
+    }
+  }
+
+  p.content {
+    white-space: pre;
+    text-wrap: wrap;
+  }
+}

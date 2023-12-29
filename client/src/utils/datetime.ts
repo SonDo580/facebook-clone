@@ -1,3 +1,5 @@
+import moment from "moment";
+
 import { MAX_AGE, Month } from "@/constants";
 
 // Get string keys of Month enum
@@ -18,4 +20,25 @@ const getYears = () => {
   ).reverse();
 };
 
-export { getStringMonths, getDays, getYears };
+function getTimeAgo(timeDiff: number): string {
+  const duration = moment.duration(timeDiff);
+
+  if (duration.asSeconds() < 60) {
+    return `${Math.floor(duration.asSeconds())}s`;
+  }
+  if (duration.asMinutes() < 60) {
+    return `${Math.floor(duration.asMinutes())}m`;
+  }
+  if (duration.asHours() < 24) {
+    return `${Math.floor(duration.asHours())}h`;
+  }
+  if (duration.asDays() < 30) {
+    return `${Math.floor(duration.asDays())}d`;
+  }
+  if (duration.asMonths() < 12) {
+    return `${Math.floor(duration.asMonths())}mo`;
+  }
+  return `${Math.floor(duration.asYears())}y`;
+}
+
+export { getStringMonths, getDays, getYears, getTimeAgo };
