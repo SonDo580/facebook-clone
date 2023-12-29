@@ -1,6 +1,8 @@
 .leftBar {
   height: calc(100vh - 60px);
   overflow-y: auto;
+  position: fixed;
+  width: 20%;
 
   &::-webkit-scrollbar {
     width: 10px;

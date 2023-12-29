@@ -4,7 +4,7 @@ function Contacts() {
       <h3>Contacts</h3>
       <ul>
         {Array.from({ length: 20 }).map((_, index) => (
-          <li className="todo">
+          <li key={index} className="todo">
             <div className="profile">
               <img src="/samples/profiles/doraemon.png" alt="profile picture" />
               <span className="badge"></span>

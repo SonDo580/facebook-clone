@@ -1,17 +1,4 @@
 .home {
   background-color: #f0f2f5;
   min-height: 100vh;
-
-  main {
-    display: flex;
-
-    .leftBar,
-    .rightBar {
-      flex: 2;
-    }
-
-    .feed {
-      flex: 5;
-    }
-  }
 }
