@@ -1,11 +1,7 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import {
-  FaAngleDown,
-  FaFacebookMessenger,
-  FaSearch,
-  FaUser,
-} from "react-icons/fa";
+import { FaAngleDown, FaFacebookMessenger, FaSearch } from "react-icons/fa";
 import {
   MdNotifications,
   MdOutlineHome,
@@ -16,9 +12,15 @@ import { RiGroup2Line } from "react-icons/ri";
 import { CgMenuGridR } from "react-icons/cg";
 
 import { PATHS } from "@/config/paths";
+import Account from "./Account";
 import "./style.scss";
 
 function TopBar() {
+  const [accountMenuVisible, setAccountMenuVisible] = useState(false);
+  const toggleAccountMenu = () => {
+    setAccountMenuVisible((visible) => !visible);
+  };
+
   return (
     <header className="topbar">
       <div className="left">
@@ -57,7 +59,7 @@ function TopBar() {
           <MdNotifications />
           <span className="badge">4</span>
         </li>
-        <li className="account">
+        <li className="account" onClick={toggleAccountMenu}>
           <img
             src="/samples/profiles/doraemon.png"
             alt="profile"
@@ -68,6 +70,8 @@ function TopBar() {
           </span>
         </li>
       </ul>
+
+      {accountMenuVisible && <Account />}
     </header>
   );
 }

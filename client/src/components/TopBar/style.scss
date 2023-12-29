@@ -132,3 +132,53 @@ header.topbar {
     }
   }
 }
+
+header.topbar > .account {
+  position: absolute;
+  right: 20px;
+  top: 60px;
+  background-color: white;
+  font-size: 1.1rem;
+  width: 350px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px #ced0d4;
+
+  ul {
+    list-style: none;
+    padding: 15px;
+    margin: 0;
+  }
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+
+    img.profile {
+      width: 40px;
+      aspect-ratio: 1 / 1;
+      border: 1px solid #ced0d4;
+      background-color: white;
+      border-radius: 50%;
+      object-fit: contain;
+    }
+
+    .name {
+      font-weight: bold;
+    }
+
+    svg {
+      background-color: #ced0d4;
+      padding: 10px;
+      border-radius: 50%;
+      font-size: 1.5rem;
+    }
+
+    &:hover {
+      background-color: #f0f2f5;
+    }
+  }
+}
