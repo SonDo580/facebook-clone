@@ -2,6 +2,10 @@
 
 A social media application that replicates some of the features of Facebook. It provides users a platform to connect, share, and engage with friends and family.
 
+## Demo
+
+Link Website: https://sondm-facebook.netlify.app
+
 ## Features
 
 1. **Implemented**
@@ -15,7 +19,7 @@ A social media application that replicates some of the features of Facebook. It 
 
 2. **In progress**
 
-- (FE) Building the UI for the Home page
+- (FE) Building UI for the Home page + Profile page
 
 3. **Todo**
 
