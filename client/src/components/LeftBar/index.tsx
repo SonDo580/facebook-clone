@@ -1,4 +1,3 @@
-import { FaUser } from "react-icons/fa";
 import "./style.scss";
 
 function LeftBar() {
@@ -26,6 +25,7 @@ function LeftBar() {
           <span>Groups</span>
         </li>
         <li className="todo">
+          https://sondm-facebook.netlify.app/
           <img src="/leftBar/memories.png" alt="memories" />
           <span>Memories</span>
         </li>
