@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { PATHS } from "@/config/paths";
+import { registerOptions } from "./validation";
 import "./style.scss";
 
 type FormFields = {
@@ -37,7 +38,7 @@ function Login() {
             <input
               type="email"
               placeholder="Email"
-              {...register("email", { required: "Email is required!" })}
+              {...register("email", registerOptions.email)}
             />
             {errors.email && <p className="error">{errors.email.message}</p>}
           </div>
@@ -46,7 +47,7 @@ function Login() {
             <input
               type="password"
               placeholder="Password"
-              {...register("password", { required: "Password is required!" })}
+              {...register("password", registerOptions.password)}
             />
             {errors.password && (
               <p className="error">{errors.password.message}</p>
