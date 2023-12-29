@@ -57,8 +57,12 @@ function TopBar() {
           <MdNotifications />
           <span className="badge">4</span>
         </li>
-        <li>
-          <FaUser />
+        <li className="account">
+          <img
+            src="/samples/profiles/doraemon.png"
+            alt="profile"
+            className="profile"
+          />
           <span className="down">
             <FaAngleDown />
           </span>

@@ -6,8 +6,12 @@ function LeftBar() {
     <aside className="leftBar">
       <ul className="items">
         <li>
-          <FaUser />
-          <span>Thor Odin's son</span>
+          <img
+            src="/samples/profiles/doraemon.png"
+            alt="profile"
+            className="profile"
+          />
+          <span>Mon the Mighty Cat</span>
         </li>
         <li className="todo">
           <img src="/leftBar/friends.png" alt="friends" />

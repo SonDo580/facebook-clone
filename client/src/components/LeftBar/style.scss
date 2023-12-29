@@ -38,5 +38,14 @@
       cursor: pointer;
       background-color: #ced0d4;
     }
+
+    img.profile {
+      width: 30px;
+      aspect-ratio: 1 / 1;
+      border: 1px solid #ced0d4;
+      background-color: white;
+      border-radius: 50%;
+      object-fit: contain;
+    }
   }
 }

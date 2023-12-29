@@ -88,9 +88,15 @@ header.topbar {
       border-radius: 50%;
       font-size: 1.8rem;
       position: relative;
+      cursor: pointer;
 
-      &:hover {
-        cursor: pointer;
+      img.profile {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        border: 1px solid #ced0d4;
+        background-color: white;
+        border-radius: 50%;
+        object-fit: contain;
       }
 
       .badge {
