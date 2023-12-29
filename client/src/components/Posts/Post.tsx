@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { SlLike } from "react-icons/sl";
-import { FaRegComment } from "react-icons/fa";
+import { FaComment, FaRegComment, FaShare } from "react-icons/fa";
 import { PiShareFat } from "react-icons/pi";
 
 import { Reaction } from "@/constants";
@@ -58,6 +58,30 @@ function Post({ post }: Props) {
           {expanded ? "See less" : "See more"}
         </button>
       </p>
+
+      <div className="statistics">
+        <div className="react">
+          <ul className="reacts">
+            <li>
+              <img src="/public/reactions/like.svg" alt="like" />
+            </li>
+            <li>
+              <img src="/public/reactions/love.svg" alt="love" />
+            </li>
+          </ul>
+          <span className="count">100</span>
+        </div>
+
+        <div className="comment todo">
+          <FaComment />
+          <span className="count">15</span>
+        </div>
+
+        <div className="share todo">
+          <FaShare />
+          <span className="count">5</span>
+        </div>
+      </div>
 
       <ul className="interact">
         <li className="react">

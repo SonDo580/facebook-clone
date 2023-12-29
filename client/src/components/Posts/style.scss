@@ -57,6 +57,54 @@
     }
   }
 
+  .statistics {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.95rem;
+    margin-bottom: 5px;
+
+    & > * {
+      cursor: pointer;
+    }
+
+    .react {
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      ul.reacts {
+        list-style: none;
+        display: flex;
+        padding: 0;
+        margin: 0;
+
+        li {
+          margin-right: -6px;
+        }
+      }
+
+      img {
+        border: 1px solid white;
+        border-radius: 50%;
+        width: 20px;
+      }
+    }
+
+    .comment,
+    .share {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+
+      svg {
+        color: #65676b;
+        font-size: 1.2rem;
+      }
+    }
+  }
+
   ul.interact {
     list-style: none;
     display: flex;
