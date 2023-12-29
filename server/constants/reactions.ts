@@ -1,3 +1,3 @@
-const REACTIONS = ["like", "heart", "love", "haha", "wow", "sad", "angry"];
+const REACTIONS = ["like", "love", "haha", "wow", "sad", "angry"];
 
 export { REACTIONS };
