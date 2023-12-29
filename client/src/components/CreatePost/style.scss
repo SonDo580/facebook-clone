@@ -105,6 +105,7 @@
     border: none;
     outline: none;
     resize: none;
+    font-size: 1.05rem;
 
     &::-webkit-scrollbar {
       width: 10px;
@@ -123,6 +124,10 @@
         display: block;
       }
     }
+  }
+
+  .error {
+    color: red;
   }
 
   ul.items {

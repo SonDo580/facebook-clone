@@ -1,12 +1,30 @@
+import { SubmitHandler, useForm } from "react-hook-form";
 import { FaCaretDown } from "react-icons/fa";
+
+import { registerOptions } from "./validation";
 
 type Props = {
   afterSubmit: () => void;
 };
 
+type FormFields = {
+  content: string;
+};
+
 function PostForm({ afterSubmit }: Props) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormFields>();
+
+  const onSubmit: SubmitHandler<FormFields> = (data) => {
+    console.log(data);
+    afterSubmit();
+  };
+
   return (
-    <form className="postForm">
+    <form className="postForm" onSubmit={handleSubmit(onSubmit)}>
       <div className="top">
         <img src="/samples/profiles/doraemon.png" alt="profile picture" />
         <div>
@@ -18,7 +36,12 @@ function PostForm({ afterSubmit }: Props) {
         </div>
       </div>
 
-      <textarea className="postContent"></textarea>
+      <textarea
+        className="postContent"
+        placeholder="What's on your mind, Mon?"
+        {...register("content", registerOptions.content)}
+      ></textarea>
+      {errors.content && <p className="error">{errors.content.message}</p>}
 
       <ul className="items todo">
         <li>
