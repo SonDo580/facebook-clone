@@ -59,14 +59,16 @@ function Post({ post }: Props) {
         </button>
       </p>
 
+      <div className="images"></div>
+
       <div className="statistics">
         <div className="react">
           <ul className="reacts">
             <li>
-              <img src="/public/reactions/like.svg" alt="like" />
+              <img src="/reactions/like.svg" alt="like" />
             </li>
             <li>
-              <img src="/public/reactions/love.svg" alt="love" />
+              <img src="/reactions/love.svg" alt="love" />
             </li>
           </ul>
           <span className="count">100</span>
