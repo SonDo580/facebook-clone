@@ -1,28 +1,31 @@
-import Home from "@/pages/Home";
-import Login from "@/pages/Login";
-import Register from "@/pages/Register";
-import Profile from "@/pages/Profile";
+import { lazy } from "react";
+
 import { PATHS } from "./paths";
+
+const Login = lazy(() => import("../pages/Login"));
+const Register = lazy(() => import("../pages/Register"));
+const Home = lazy(() => import("../pages/Home"));
+const Profile = lazy(() => import("../pages/Profile"));
 
 const PUBLIC_ROUTES = [
   {
     path: PATHS.register,
-    component: Register,
+    Component: Register,
   },
   {
     path: PATHS.login,
-    component: Login,
+    Component: Login,
   },
 ];
 
 const PROTECTED_ROUTES = [
   {
     path: PATHS.home,
-    component: Home,
+    Component: Home,
   },
   {
     path: PATHS.profile,
-    component: Profile,
+    Component: Profile,
   },
 ];
 
