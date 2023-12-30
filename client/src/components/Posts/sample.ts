@@ -38,6 +38,13 @@ const posts = [
     },
     updatedAt: oneHourAgo,
     content,
+    images: [
+      "/samples/images/dinosaur.jpeg",
+      "/samples/images/dinosaur.jpeg",
+      "/samples/images/dinosaur.jpeg",
+      "/samples/images/dinosaur.jpeg",
+      "/samples/images/dinosaur.jpeg",
+    ],
   },
   {
     _id: "test2",
@@ -48,6 +55,7 @@ const posts = [
     },
     updatedAt: twoDaysAgo,
     content,
+    images: ["/samples/images/dinosaur.jpeg"],
   },
 ];
 

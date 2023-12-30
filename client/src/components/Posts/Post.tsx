@@ -18,6 +18,7 @@ type PostType = {
   author: Author;
   updatedAt: Date;
   content: string;
+  images: string[];
 };
 
 type Props = {
@@ -25,8 +26,11 @@ type Props = {
 };
 
 function Post({ post }: Props) {
-  const { author, content, updatedAt } = post;
+  const { author, content, updatedAt, images } = post;
   const { lastName, firstName, profile } = author;
+
+  const renderedImages = images.slice(0, 3);
+  const remainedImagesLength = images.length - renderedImages.length;
 
   const [expanded, setExpanded] = useState(false);
   const toggleContent = () => {
@@ -59,7 +63,20 @@ function Post({ post }: Props) {
         </button>
       </p>
 
-      <div className="images"></div>
+      <ul className="images">
+        {renderedImages.map((path, index) => (
+          <li key={index}>
+            <img src={path} alt="post image" />
+
+            {index === renderedImages.length - 1 &&
+              remainedImagesLength > 0 && (
+                <div className="more">
+                  <span>+ {remainedImagesLength}</span>
+                </div>
+              )}
+          </li>
+        ))}
+      </ul>
 
       <div className="statistics">
         <div className="react">
@@ -98,10 +115,12 @@ function Post({ post }: Props) {
             ))}
           </ul>
         </li>
+
         <li className="todo">
           <FaRegComment />
           <span>Comment</span>
         </li>
+
         <li className="todo">
           <PiShareFat />
           <span>Share</span>
