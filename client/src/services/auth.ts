@@ -1,6 +1,9 @@
 import { User } from "@/types/user";
 import { RegisterData } from "@/types/auth";
-import { saveItemToLocalStorage } from "@/utils/storage";
+import {
+  removeItemFromLocalStorage,
+  saveItemToLocalStorage,
+} from "@/utils/storage";
 import { handleServiceError } from "@/utils/error";
 import { axiosInstance } from "./request";
 
@@ -20,5 +23,23 @@ const register = async (registerData: RegisterData): Promise<User> => {
   }
 };
 
-const authService = { register };
+type LogoutReturnType = {
+  message: string;
+};
+
+const logout = async (): Promise<LogoutReturnType> => {
+  try {
+    const response = await axiosInstance.post<LogoutReturnType>(
+      `${URL}/logout`
+    );
+
+    removeItemFromLocalStorage("user");
+    return response.data;
+  } catch (error) {
+    return handleServiceError(error);
+  }
+};
+
+const authService = { register, logout };
+
 export default authService;

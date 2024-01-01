@@ -34,17 +34,36 @@ const authSlice = createSlice({
       state.loading = false;
       state.errorMsg = action.payload;
     },
+    logoutPending: (state) => {
+      state.loading = true;
+    },
+    logoutSuscess: (state) => {
+      state.loading = false;
+      state.errorMsg = "";
+      state.user = null;
+    },
+    logoutFailed: (state, action) => {
+      state.loading = false;
+      state.errorMsg = action.payload;
+    },
   },
 });
 
 export default authSlice.reducer;
 
-export const { registerPending, registerSuscess, registerFailed } =
-  authSlice.actions;
+export const {
+  registerPending,
+  registerSuscess,
+  registerFailed,
+  logoutPending,
+  logoutSuscess,
+  logoutFailed,
+} = authSlice.actions;
 
 // Extra actions
 const getActionType = (name: string) => `${SLICE_NAME}/${name}`;
 
 const registerInit = createAction<RegisterData>(getActionType("registerInit"));
+const logoutInit = createAction(getActionType("logoutInit"));
 
-export { registerInit };
+export { registerInit, logoutInit };
