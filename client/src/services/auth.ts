@@ -6,11 +6,11 @@ import { axiosInstance } from "./request";
 
 const URL = "/auth";
 
-const register = async (userData: RegisterData): Promise<User> => {
+const register = async (registerData: RegisterData): Promise<User> => {
   try {
     const response = await axiosInstance.post<User>(
       `${URL}/register`,
-      userData
+      registerData
     );
 
     saveItemToLocalStorage<User>("user", response.data);

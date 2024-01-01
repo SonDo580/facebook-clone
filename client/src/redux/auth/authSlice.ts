@@ -1,7 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAction, createSlice } from "@reduxjs/toolkit";
 
 import { User } from "@/types/user";
 import { getItemFromLocalStorage } from "@/utils/storage";
+import { RegisterData } from "@/types/auth";
 
 type AuthState = {
   user: User | null;
@@ -20,7 +21,30 @@ const initialState: AuthState = {
 const authSlice = createSlice({
   name: SLICE_NAME,
   initialState,
-  reducers: {},
+  reducers: {
+    registerPending: (state) => {
+      state.loading = true;
+    },
+    registerSuscess: (state, action) => {
+      state.loading = false;
+      state.errorMsg = "";
+      state.user = action.payload;
+    },
+    registerFailed: (state, action) => {
+      state.loading = false;
+      state.errorMsg = action.payload;
+    },
+  },
 });
 
 export default authSlice.reducer;
+
+export const { registerPending, registerSuscess, registerFailed } =
+  authSlice.actions;
+
+// Extra actions
+const getActionType = (name: string) => `${SLICE_NAME}/${name}`;
+
+const registerInit = createAction<RegisterData>(getActionType("registerInit"));
+
+export { registerInit };
