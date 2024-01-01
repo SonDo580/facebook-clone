@@ -6,7 +6,7 @@ type DocId = Types.ObjectId;
 
 type Reaction = {
   reactionType: string;
-  users: DocId[];
+  user: DocId;
 };
 
 interface PostDoc extends Document {
