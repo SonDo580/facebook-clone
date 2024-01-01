@@ -15,17 +15,17 @@ Link Website: https://sondm-facebook.netlify.app
 - (BE) Follow and unfollow people.
 - (BE) Friend: friend list, friend request list, send/cancel/accept/reject friend requests, unfriend.
 - (BE) Post: create/get/update/delete post, post list, react to post.
-- (FE) Register and Login forms, frontend validation
-- (FE) Building UI for the Home page
+- (FE) Register and Login forms
+- (FE) Home page UI
+- (FE) Handle authentication
 
 2. **In progress**
 
-- (FE) Handle authentication
+- (FE) Integrate with BE: 'Post' feature
 
 3. **Todo**
 
-- (FE) Integrate with BE
-- (FE) Building UI for the Profile page
+- (FE) Build UI for the other pages (Profile, Friends)
 - (BE) Comment: add/edit/delete comment, comment list, react and reply to comment.
 
 ## Technologies Used
