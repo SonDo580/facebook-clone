@@ -89,5 +89,14 @@
         }
       }
     }
+
+    .formError {
+      box-shadow: 0 0 10px #be4b49;
+      background-color: #be4b49;
+      color: white;
+      font-size: 1.1rem;
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
   }
 }

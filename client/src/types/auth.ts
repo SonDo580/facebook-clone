@@ -9,4 +9,13 @@ type RegisterData = {
   gender: string;
 };
 
-export type { RegisterData };
+type LoginData = {
+  email: string;
+  password: string;
+};
+
+type LogoutReturnType = {
+  message: string;
+};
+
+export type { RegisterData, LoginData, LogoutReturnType };

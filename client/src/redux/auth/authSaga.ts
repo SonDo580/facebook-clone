@@ -3,6 +3,10 @@ import { all, call, put, takeLatest } from "redux-saga/effects";
 import { User } from "@/types/user";
 import authService from "@/services/auth";
 import {
+  loginFailed,
+  loginInit,
+  loginPending,
+  loginSuscess,
   logoutFailed,
   logoutInit,
   logoutPending,
@@ -23,6 +27,16 @@ function* register(action: ReturnType<typeof registerInit>) {
   }
 }
 
+function* login(action: ReturnType<typeof loginInit>) {
+  yield put(loginPending());
+  try {
+    const user: User = yield call(authService.login, action.payload);
+    yield put(loginSuscess(user));
+  } catch (error) {
+    yield put(loginFailed((error as Error).message));
+  }
+}
+
 function* logout() {
   yield put(logoutPending());
   try {
@@ -37,10 +51,14 @@ function* registerWatcher() {
   yield takeLatest(registerInit.type, register);
 }
 
+function* loginWatcher() {
+  yield takeLatest(loginInit.type, login);
+}
+
 function* logoutWatcher() {
   yield takeLatest(logoutInit.type, logout);
 }
 
 export function* authSaga() {
-  yield all([call(registerWatcher), call(logoutWatcher)]);
+  yield all([call(registerWatcher), call(loginWatcher), call(logoutWatcher)]);
 }

@@ -1,8 +1,8 @@
 import { createAction, createSlice } from "@reduxjs/toolkit";
 
 import { User } from "@/types/user";
+import { LoginData, RegisterData } from "@/types/auth";
 import { getItemFromLocalStorage } from "@/utils/storage";
-import { RegisterData } from "@/types/auth";
 
 type AuthState = {
   user: User | null;
@@ -34,6 +34,18 @@ const authSlice = createSlice({
       state.loading = false;
       state.errorMsg = action.payload;
     },
+    loginPending: (state) => {
+      state.loading = true;
+    },
+    loginSuscess: (state, action) => {
+      state.loading = false;
+      state.errorMsg = "";
+      state.user = action.payload;
+    },
+    loginFailed: (state, action) => {
+      state.loading = false;
+      state.errorMsg = action.payload;
+    },
     logoutPending: (state) => {
       state.loading = true;
     },
@@ -55,6 +67,9 @@ export const {
   registerPending,
   registerSuscess,
   registerFailed,
+  loginPending,
+  loginSuscess,
+  loginFailed,
   logoutPending,
   logoutSuscess,
   logoutFailed,
@@ -64,6 +79,7 @@ export const {
 const getActionType = (name: string) => `${SLICE_NAME}/${name}`;
 
 const registerInit = createAction<RegisterData>(getActionType("registerInit"));
+const loginInit = createAction<LoginData>(getActionType("loginInit"));
 const logoutInit = createAction(getActionType("logoutInit"));
 
-export { registerInit, logoutInit };
+export { registerInit, loginInit, logoutInit };
