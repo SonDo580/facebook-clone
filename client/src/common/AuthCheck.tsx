@@ -1,12 +1,13 @@
 import { Navigate, Outlet } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import { PATHS } from "@/config/routes";
+import { authSelector } from "@/redux/selectors";
 
 function AuthCheck() {
-  // TODO: Check if user already logged in
-  const authenticated = true;
+  const { user } = useSelector(authSelector);
 
-  if (authenticated) {
+  if (user) {
     return <Outlet />;
   }
 
