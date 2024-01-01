@@ -1,12 +1,21 @@
 import { configureStore } from "@reduxjs/toolkit";
+import createSagaMiddleware from "redux-saga";
 
-import authReducer from "./auth/authSlice";
+import { rootReducer } from "./rootReducer";
+import { rootSaga } from "./rootSaga";
+
+const sagaMiddleware = createSagaMiddleware();
 
 const store = configureStore({
-  reducer: { auth: authReducer },
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(sagaMiddleware),
+  devTools: !import.meta.env.PROD,
 });
 
-type RootState = ReturnType<typeof store.getState>;
+sagaMiddleware.run(rootSaga);
+
+type RootState = ReturnType<typeof rootReducer>;
 type AppDispatch = typeof store.dispatch;
 
 export { store };
