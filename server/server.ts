@@ -14,8 +14,12 @@ dotenv.config();
 connectDB(); // connect to database
 const app = express();
 
-// TODO: add live client URL
-const allowedOrigins = ["http://localhost:5173"];
+// CORS config
+const allowedOrigins = [
+  process.env.NODE_ENV === "production"
+    ? process.env.CLIENT_URL!
+    : "http://localhost:5173",
+];
 app.use(
   cors({
     origin: allowedOrigins,
