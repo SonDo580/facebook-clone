@@ -12,6 +12,7 @@ import {
   getUsername,
   generateToken,
 } from "../utils/auth";
+import { COOKIE_OPTIONS, JWT_OPTIONS } from "../constants/auth";
 
 /* Register handler */
 const register = [
@@ -78,17 +79,12 @@ const register = [
     }
 
     // Generate token
-    const token = generateToken(
-      { userId: user._id.toString() },
-      { expiresIn: "7d" }
-    );
+    const jwtPayload = { userId: user._id.toString() };
+    const token = generateToken(jwtPayload, JWT_OPTIONS);
 
     res
       .status(201)
-      .cookie("token", token, {
-        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-        httpOnly: true,
-      })
+      .cookie("token", token, COOKIE_OPTIONS)
       .json(getUserInfo(user));
   }),
 ];
@@ -100,30 +96,22 @@ const login = asyncHandler(async (req: Request, res: Response) => {
   // Find user with email
   const user = await User.findOne({ email });
   if (!user) {
-    res.status(401);
+    res.status(400);
     throw new Error("Invalid credentials!");
   }
 
   // Check password
   const validPassword = await bcrypt.compare(password, user.password);
   if (!validPassword) {
-    res.status(401);
+    res.status(400);
     throw new Error("Invalid credentials!");
   }
 
   // Generate token
-  const token = generateToken(
-    { userId: user._id.toString() },
-    { expiresIn: "7d" }
-  );
+  const jwtPayload = { userId: user._id.toString() };
+  const token = generateToken(jwtPayload, JWT_OPTIONS);
 
-  res
-    .status(200)
-    .cookie("token", token, {
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      httpOnly: true,
-    })
-    .json(getUserInfo(user));
+  res.cookie("token", token, COOKIE_OPTIONS).json(getUserInfo(user));
 });
 
 const logout = (req: CustomRequest, res: Response) => {
