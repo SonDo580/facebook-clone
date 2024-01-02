@@ -2,6 +2,13 @@
 
 A social media application that replicates some of the features of Facebook. It provides users a platform to connect, share, and engage with friends and family.
 
+## Table of Contents
+
+- [Demo](#demo)
+- [Features](#features)
+- [Technologies](#technologies)
+- [Development](#development)
+
 ## Demo
 
 Link Website: https://sondm-facebook.netlify.app
@@ -10,14 +17,12 @@ Link Website: https://sondm-facebook.netlify.app
 
 1. **Implemented**
 
-- (BE) Authentication: register, login, logout.
+- Authentication: register, login, logout.
 - (BE) User management: get user info, update user info, delete account
 - (BE) Follow and unfollow people.
 - (BE) Friend: friend list, friend request list, send/cancel/accept/reject friend requests, unfriend.
 - (BE) Post: create/get/update/delete post, post list, react to post.
-- (FE) Register and Login forms
 - (FE) Home page UI
-- (FE) Handle authentication
 
 2. **In progress**
 
@@ -28,7 +33,7 @@ Link Website: https://sondm-facebook.netlify.app
 - (FE) Build UI for the other pages (Profile, Friends)
 - (BE) Comment: add/edit/delete comment, comment list, react and reply to comment.
 
-## Technologies Used
+## Technologies
 
 1. **Frontend**
 
@@ -45,3 +50,41 @@ Link Website: https://sondm-facebook.netlify.app
 - MongoDB, Mongoose
 - Express Validator
 - Bcrypt, JWT
+
+## Development
+
+To run the project locally, follow these steps:
+
+1. Clone the repository
+
+```bash
+git clone https://github.com/SonDo580/facebook-clone.git
+cd facebook-clone
+```
+
+2. Create a MongoDB database and get the connection string
+
+3. Create a `.env` file in the server project and add the following:
+
+```env
+MONGODB_URI=your_mongodb_uri
+JWT_SECRET=your_jwt_secret
+```
+
+4. Install server dependencies and run server
+
+```bash
+cd server
+yarn
+yarn dev
+```
+
+5. Install client dependencies and run client
+
+```bash
+cd client
+yarn
+yarn dev
+```
+
+6. Visit http://localhost:5173 in your web browser.
