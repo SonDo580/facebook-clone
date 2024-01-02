@@ -12,7 +12,7 @@ import {
   getUsername,
   generateToken,
 } from "../utils/auth";
-import { COOKIE_OPTIONS, JWT_OPTIONS } from "../constants/auth";
+import { COOKIE_OPTIONS, JWT_OPTIONS } from "../config/token";
 
 /* Register handler */
 const register = [
