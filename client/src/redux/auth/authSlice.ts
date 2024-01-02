@@ -22,6 +22,9 @@ const authSlice = createSlice({
   name: SLICE_NAME,
   initialState,
   reducers: {
+    resetError: (state) => {
+      state.errorMsg = "";
+    },
     registerPending: (state) => {
       state.loading = true;
     },
@@ -64,6 +67,7 @@ const authSlice = createSlice({
 export default authSlice.reducer;
 
 export const {
+  resetError,
   registerPending,
   registerSuscess,
   registerFailed,

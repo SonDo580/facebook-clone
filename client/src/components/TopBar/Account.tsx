@@ -1,17 +1,28 @@
-import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 import { FaMoon } from "react-icons/fa";
 import { MdFeedback, MdHelp, MdSettings } from "react-icons/md";
 import { IoLogOut } from "react-icons/io5";
 
-import { logoutInit } from "@/redux/auth/authSlice";
+import { logoutInit, resetError } from "@/redux/auth/authSlice";
+import { authSelector } from "@/redux/selectors";
 
 function Account() {
   const dispatch = useDispatch();
+  const { errorMsg } = useSelector(authSelector);
 
   const handleLogout = () => {
     dispatch(logoutInit());
   };
+
+  useEffect(() => {
+    if (errorMsg) {
+      toast.error(errorMsg);
+      dispatch(resetError());
+    }
+  }, [dispatch, errorMsg]);
 
   return (
     <div className="account">
