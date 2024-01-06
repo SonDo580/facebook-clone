@@ -134,15 +134,19 @@ const getPost = asyncHandler(async (req: CustomRequest, res: Response) => {
 const postList = asyncHandler(async (req: CustomRequest, res: Response) => {
   const currentUser = req.user!;
 
-  // Find posts by currentUser
-  const userPosts = await Post.find({ author: currentUser._id });
+  // Find posts by currentUser and people that currentUser is following
+  const posts = await Post.find({
+    $or: [
+      { author: currentUser._id },
+      {
+        author: { $in: currentUser.following },
+      },
+    ],
+  }).sort({ updatedAt: -1 });
 
-  // Find posts by people that currentUser is following
-  const followingPosts = await Post.find({
-    author: { $in: currentUser.following },
-  });
+  // TODO: Limit number of posts returned (client will use infinite scrolling)
 
-  res.json([...userPosts, ...followingPosts]);
+  res.json(posts);
 });
 
 /* React to a post */
