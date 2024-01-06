@@ -110,7 +110,7 @@ function Post({ post }: Props) {
           <ul className="reacts">
             {(Object.keys(Reaction) as Reaction[]).map((reaction) => (
               <li key={reaction} onClick={() => reactToPost(reaction)}>
-                <img src={`/reactions/${reaction}.gif`} alt={reaction} />
+                <img src={`/reactions/${reaction}.svg`} alt={reaction} />
               </li>
             ))}
           </ul>
