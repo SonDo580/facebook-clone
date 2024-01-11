@@ -5,16 +5,16 @@ import {
   createPost,
   deletePost,
   getPost,
-  postList,
   updatePost,
   reactToPost,
+  getFeedPosts,
 } from "../controllers/post";
 
 const router = Router();
 
 router.use(protect);
 
-router.route("/").get(postList).post(createPost);
+router.route("/").get(getFeedPosts).post(createPost);
 
 router.route("/:postId").get(getPost).put(updatePost).delete(deletePost);
 

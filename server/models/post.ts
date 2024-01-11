@@ -4,16 +4,13 @@ import { REACTIONS } from "../constants/reactions";
 
 type DocId = Types.ObjectId;
 
-type Reaction = {
-  reactionType: string;
-  user: DocId;
-};
+type ReactionMap = Record<(typeof REACTIONS)[number], DocId[]>;
 
 interface PostDoc extends Document {
   author: DocId;
   content: string;
   images: string[];
-  reactions: Reaction[];
+  reactions: ReactionMap;
 }
 
 const { ObjectId } = Schema;
@@ -35,20 +32,18 @@ const postSchema = new Schema<PostDoc>(
         required: true,
       },
     ],
-    reactions: [
-      {
-        reactionType: {
-          type: String,
-          enum: REACTIONS,
-          required: true,
-        },
-        user: {
-          type: ObjectId,
-          ref: "User",
-          required: true,
-        },
-      },
-    ],
+    reactions: Object.fromEntries(
+      REACTIONS.map((reactionType) => [
+        reactionType,
+        [
+          {
+            type: Schema.Types.ObjectId,
+            ref: "User",
+            required: true,
+          },
+        ],
+      ])
+    ),
   },
   {
     timestamps: true,

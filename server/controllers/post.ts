@@ -130,8 +130,8 @@ const getPost = asyncHandler(async (req: CustomRequest, res: Response) => {
   res.json(post);
 });
 
-/* Get list of posts */
-const postList = asyncHandler(async (req: CustomRequest, res: Response) => {
+/* Get feed posts */
+const getFeedPosts = asyncHandler(async (req: CustomRequest, res: Response) => {
   const currentUser = req.user!;
 
   // Find posts by currentUser and people that currentUser is following
@@ -162,9 +162,14 @@ const reactToPost = asyncHandler(async (req: CustomRequest, res: Response) => {
   const userId = req.user!._id;
   const { reactionType } = req.body;
 
-  // Remove user reaction if reactionType is null
+  // Just remove user reaction if reactionType is null
   if (reactionType === null) {
-    await post.updateOne({ $pull: { reactions: { user: userId } } });
+    await post.updateOne({
+      $pull: Object.fromEntries(
+        REACTIONS.map((reaction) => [`reactions.${reaction}`, { user: userId }])
+      ),
+    });
+
     res.json({ message: "Success" });
     return;
   }
@@ -175,25 +180,28 @@ const reactToPost = asyncHandler(async (req: CustomRequest, res: Response) => {
     throw new Error("Invalid reaction!");
   }
 
-  const reacted = await Post.exists({
-    _id: postId,
-    "reactions.user": userId,
+  // Remove user's old reaction
+  await post.updateOne({
+    $pull: Object.fromEntries(
+      REACTIONS.map((reaction) => [`reactions.${reaction}`, userId])
+    ),
   });
 
-  if (!reacted) {
-    // Add user reaction
-    await post.updateOne({
-      $push: { reactions: { user: userId, reactionType } },
-    });
-  } else {
-    // Update user reaction
-    await post.updateOne(
-      { $set: { "reactions.$[elem].reactionType": reactionType } },
-      { arrayFilters: [{ "elem.user": userId }] }
-    );
-  }
+  // Add user's new reaction
+  await post.updateOne({
+    $push: {
+      [`reactions.${reactionType}`]: userId,
+    },
+  });
 
   res.json({ message: "Success" });
 });
 
-export { createPost, updatePost, deletePost, getPost, postList, reactToPost };
+export {
+  createPost,
+  updatePost,
+  deletePost,
+  getPost,
+  getFeedPosts,
+  reactToPost,
+};
