@@ -4,9 +4,10 @@ import { SlLike } from "react-icons/sl";
 import { FaComment, FaRegComment, FaShare } from "react-icons/fa";
 import { PiShareFat } from "react-icons/pi";
 
+import { Post as PostType } from "@/types/post";
 import { Reaction } from "@/constants";
 import { getTimeAgo } from "@/utils/datetime";
-import { Post as PostType } from "@/types/post";
+import { getReactionStatistics } from "@/utils/utils";
 
 type Props = {
   post: PostType;
@@ -15,6 +16,9 @@ type Props = {
 function Post({ post }: Props) {
   const { author, content, updatedAt, images, reactions } = post;
   const { lastName, firstName, profilePicture } = author;
+
+  const { total: totalReactions, topReactions } =
+    getReactionStatistics(reactions);
 
   const renderedImages = images.slice(0, 3);
   const remainedImagesLength = images.length - renderedImages.length;
@@ -66,17 +70,18 @@ function Post({ post }: Props) {
       </ul>
 
       <div className="statistics">
-        <div className="react">
-          <ul className="reacts">
-            <li>
-              <img src="/reactions/like.svg" alt="like" />
-            </li>
-            <li>
-              <img src="/reactions/love.svg" alt="love" />
-            </li>
-          </ul>
-          <span className="count">100</span>
-        </div>
+        {totalReactions && (
+          <div className="react">
+            <ul className="reacts">
+              {topReactions.map((reaction) => (
+                <li>
+                  <img src={`/reactions/${reaction}.svg`} alt={reaction} />
+                </li>
+              ))}
+            </ul>
+            <span className="count">{totalReactions}</span>
+          </div>
+        )}
 
         <div className="comment todo">
           <FaComment />
