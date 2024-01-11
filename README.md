@@ -2,16 +2,12 @@
 
 A social media application that replicates some of the features of Facebook. It provides users a platform to connect, share, and engage with friends and family.
 
-## Table of Contents
-
-- [Demo](#demo)
-- [Features](#features)
-- [Technologies](#technologies)
-- [Development](#development)
-
 ## Demo
 
-Link Website: https://sondm-facebook.netlify.app
+https://sondm-facebook.netlify.app
+
+> [!NOTE]
+> The server may take up to 1 minute to process the first request. It spins down after 15 minutes of no incoming traffic, and will need some time to spin back up.
 
 ## Features
 
