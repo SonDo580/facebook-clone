@@ -1,16 +1,20 @@
+import { useSelector } from "react-redux";
+
+import { authSelector } from "@/redux/selectors";
 import "./style.scss";
 
 function LeftBar() {
+  const { user } = useSelector(authSelector);
+  const { firstName, lastName, profilePicture } = user!;
+
   return (
     <aside className="leftBar">
       <ul className="items">
         <li>
-          <img
-            src="/samples/profiles/doraemon.png"
-            alt="profile"
-            className="profile"
-          />
-          <span>Mon the Mighty Cat</span>
+          <img src={profilePicture} alt="profile" className="profile" />
+          <span>
+            {firstName} {lastName}
+          </span>
         </li>
         <li className="todo">
           <img src="/leftBar/friends.png" alt="friends" />

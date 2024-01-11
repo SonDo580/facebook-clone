@@ -7,7 +7,7 @@ import { PiShareFat } from "react-icons/pi";
 import { Post as PostType } from "@/types/post";
 import { Reaction } from "@/constants";
 import { getTimeAgo } from "@/utils/datetime";
-import { getReactionStatistics } from "@/utils/utils";
+import { getReactionStatistics } from "@/utils/reaction";
 
 type Props = {
   post: PostType;

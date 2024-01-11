@@ -1,6 +1,8 @@
+import { useSelector } from "react-redux";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FaCaretDown } from "react-icons/fa";
 
+import { authSelector } from "@/redux/selectors";
 import { registerOptions } from "./validation";
 
 type Props = {
@@ -12,6 +14,9 @@ type FormFields = {
 };
 
 function PostForm({ afterSubmit }: Props) {
+  const { user } = useSelector(authSelector);
+  const { firstName, lastName, profilePicture } = user!;
+
   const {
     register,
     handleSubmit,
@@ -26,9 +31,11 @@ function PostForm({ afterSubmit }: Props) {
   return (
     <form className="postForm" onSubmit={handleSubmit(onSubmit)}>
       <div className="top">
-        <img src="/samples/profiles/doraemon.png" alt="profile picture" />
+        <img src={profilePicture} alt="profile" />
         <div>
-          <span className="name">Mon the Mighty Cat</span>
+          <span className="name">
+            {firstName} {lastName}
+          </span>
           <button className="audience todo">
             <span>Post Audience</span>
             <FaCaretDown />
@@ -38,7 +45,7 @@ function PostForm({ afterSubmit }: Props) {
 
       <textarea
         className="postContent"
-        placeholder="What's on your mind, Mon?"
+        placeholder={`What's on your mind, ${firstName}?`}
         {...register("content", registerOptions.content)}
       ></textarea>
       {errors.content && <p className="error">{errors.content.message}</p>}

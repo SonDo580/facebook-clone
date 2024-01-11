@@ -1,10 +1,16 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
+
+import { authSelector } from "@/redux/selectors";
 
 import Modal from "@/common/Modal";
 import "./style.scss";
 import PostForm from "./PostForm";
 
 function CreatePost() {
+  const { user } = useSelector(authSelector);
+  const { firstName, profilePicture } = user!;
+
   const [formVisible, setFormVisible] = useState(false);
   const showForm = () => {
     setFormVisible(true);
@@ -17,8 +23,8 @@ function CreatePost() {
     <>
       <div className="createPost">
         <div className="top">
-          <img src="/samples/profiles/doraemon.png" alt="profile picture" />
-          <button onClick={showForm}>What's on your mind, Mon?</button>
+          <img src={profilePicture} alt="profile" />
+          <button onClick={showForm}>What's on your mind, {firstName}?</button>
         </div>
 
         <ul className="bottom">

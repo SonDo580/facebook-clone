@@ -11,7 +11,8 @@ import { authSelector } from "@/redux/selectors";
 
 function Account() {
   const dispatch = useDispatch();
-  const { errorMsg } = useSelector(authSelector);
+  const { user, errorMsg } = useSelector(authSelector);
+  const { firstName, lastName, profilePicture } = user!;
 
   const handleLogout = () => {
     dispatch(logoutInit());
@@ -28,12 +29,10 @@ function Account() {
     <div className="account">
       <ul className="items">
         <li>
-          <img
-            src="/samples/profiles/doraemon.png"
-            alt="profile"
-            className="profile"
-          />
-          <span className="name">Mon the Mighty Cat</span>
+          <img src={profilePicture} alt="profile" className="profile" />
+          <span className="name">
+            {firstName} {lastName}
+          </span>
         </li>
         <li className="todo">
           <MdSettings />

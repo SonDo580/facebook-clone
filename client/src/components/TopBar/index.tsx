@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { FaAngleDown, FaFacebookMessenger, FaSearch } from "react-icons/fa";
@@ -12,10 +13,15 @@ import { RiGroup2Line } from "react-icons/ri";
 import { CgMenuGridR } from "react-icons/cg";
 
 import { PATHS } from "@/config/paths";
-import Account from "./Account";
+import { authSelector } from "@/redux/selectors";
+
 import "./style.scss";
+import Account from "./Account";
 
 function TopBar() {
+  const { user } = useSelector(authSelector);
+  const { firstName, lastName, profilePicture } = user!;
+
   const [accountMenuVisible, setAccountMenuVisible] = useState(false);
   const toggleAccountMenu = () => {
     setAccountMenuVisible((visible) => !visible);
@@ -60,11 +66,7 @@ function TopBar() {
           <span className="badge">4</span>
         </li>
         <li className="account" onClick={toggleAccountMenu}>
-          <img
-            src="/samples/profiles/doraemon.png"
-            alt="profile"
-            className="profile"
-          />
+          <img src={profilePicture} alt="profile" className="profile" />
           <span className="down">
             <FaAngleDown />
           </span>
