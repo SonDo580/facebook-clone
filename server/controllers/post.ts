@@ -142,7 +142,12 @@ const getFeedPosts = asyncHandler(async (req: CustomRequest, res: Response) => {
         author: { $in: currentUser.following },
       },
     ],
-  }).sort({ updatedAt: -1 });
+  })
+    .populate({
+      path: "author",
+      select: "firstName lastName profilePicture",
+    })
+    .sort({ updatedAt: -1 });
 
   // TODO: Limit number of posts returned (client will use infinite scrolling)
 
