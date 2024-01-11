@@ -9,7 +9,7 @@ type Post = {
   content: string;
   images: string[];
   reactions: ReactionMap;
-  updatedAt: Date;
+  updatedAt: string;
 };
 
 type PostRef = string | Partial<Post>;

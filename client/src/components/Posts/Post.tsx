@@ -35,13 +35,13 @@ function Post({ post }: Props) {
   return (
     <div className="post">
       <div className="info">
-        <img src={profilePicture} alt="profile picture" />
+        <img src={profilePicture} alt="profile" />
         <div className="text">
           <span className="name">
             {firstName} {lastName}
           </span>
           <span className="time">
-            {getTimeAgo(Date.now() - updatedAt.getTime())}
+            {getTimeAgo(Date.now() - Date.parse(updatedAt))}
           </span>
         </div>
       </div>
