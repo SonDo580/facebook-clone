@@ -15,12 +15,13 @@ import { CgMenuGridR } from "react-icons/cg";
 import { PATHS } from "@/config/paths";
 import { authSelector } from "@/redux/selectors";
 
+import ProfileImg from "@/common/ProfileImg";
 import "./style.scss";
 import Account from "./Account";
 
 function TopBar() {
   const { user } = useSelector(authSelector);
-  const { firstName, lastName, profilePicture } = user!;
+  const { profilePicture } = user!;
 
   const [accountMenuVisible, setAccountMenuVisible] = useState(false);
   const toggleAccountMenu = () => {
@@ -66,7 +67,11 @@ function TopBar() {
           <span className="badge">4</span>
         </li>
         <li className="account" onClick={toggleAccountMenu}>
-          <img src={profilePicture} alt="profile" className="profile" />
+          <ProfileImg
+            profilePicture={profilePicture}
+            alt="profile"
+            className="profile"
+          />
           <span className="down">
             <FaAngleDown />
           </span>

@@ -8,6 +8,7 @@ import { IoLogOut } from "react-icons/io5";
 
 import { logoutInit, resetError } from "@/redux/auth/authSlice";
 import { authSelector } from "@/redux/selectors";
+import ProfileImg from "@/common/ProfileImg";
 
 function Account() {
   const dispatch = useDispatch();
@@ -29,7 +30,11 @@ function Account() {
     <div className="account">
       <ul className="items">
         <li>
-          <img src={profilePicture} alt="profile" className="profile" />
+          <ProfileImg
+            profilePicture={profilePicture}
+            alt="profile"
+            className="profile"
+          />
           <span className="name">
             {firstName} {lastName}
           </span>

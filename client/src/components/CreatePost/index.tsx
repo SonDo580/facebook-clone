@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { authSelector } from "@/redux/selectors";
 
 import Modal from "@/common/Modal";
+import ProfileImg from "@/common/ProfileImg";
 import "./style.scss";
 import PostForm from "./PostForm";
 
@@ -23,7 +24,7 @@ function CreatePost() {
     <>
       <div className="createPost">
         <div className="top">
-          <img src={profilePicture} alt="profile" />
+          <ProfileImg profilePicture={profilePicture} alt="profile" />
           <button onClick={showForm}>What's on your mind, {firstName}?</button>
         </div>
 

@@ -3,6 +3,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { FaCaretDown } from "react-icons/fa";
 
 import { authSelector } from "@/redux/selectors";
+import ProfileImg from "@/common/ProfileImg";
 import { registerOptions } from "./validation";
 
 type Props = {
@@ -31,7 +32,7 @@ function PostForm({ afterSubmit }: Props) {
   return (
     <form className="postForm" onSubmit={handleSubmit(onSubmit)}>
       <div className="top">
-        <img src={profilePicture} alt="profile" />
+        <ProfileImg profilePicture={profilePicture} alt="profile" />
         <div>
           <span className="name">
             {firstName} {lastName}

@@ -1,6 +1,8 @@
 import { useSelector } from "react-redux";
 
 import { authSelector } from "@/redux/selectors";
+
+import ProfileImg from "@/common/ProfileImg";
 import "./style.scss";
 
 function LeftBar() {
@@ -11,7 +13,11 @@ function LeftBar() {
     <aside className="leftBar">
       <ul className="items">
         <li>
-          <img src={profilePicture} alt="profile" className="profile" />
+          <ProfileImg
+            profilePicture={profilePicture}
+            alt="profile"
+            className="profile"
+          />
           <span>
             {firstName} {lastName}
           </span>
