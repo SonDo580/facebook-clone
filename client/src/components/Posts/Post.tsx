@@ -17,6 +17,9 @@ function Post({ post }: Props) {
   const { author, content, updatedAt, images, reactions } = post;
   const { lastName, firstName, profilePicture } = author;
 
+  const shortenedContent = content.slice(0, 1000);
+  const showSeeMore = shortenedContent.length < content.length;
+
   const { total: totalReactions, topReactions } =
     getReactionStatistics(reactions);
 
@@ -49,9 +52,11 @@ function Post({ post }: Props) {
       <p className="content">
         {expanded ? content : `${content.slice(0, 1000)}...`}
 
-        <button onClick={toggleContent} className="contentControl">
-          {expanded ? "See less" : "See more"}
-        </button>
+        {showSeeMore && (
+          <button onClick={toggleContent} className="contentControl">
+            {expanded ? "See less" : "See more"}
+          </button>
+        )}
       </p>
 
       <ul className="images">
