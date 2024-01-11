@@ -6,28 +6,15 @@ import { PiShareFat } from "react-icons/pi";
 
 import { Reaction } from "@/constants";
 import { getTimeAgo } from "@/utils/datetime";
-
-type Author = {
-  firstName: string;
-  lastName: string;
-  profile: string;
-};
-
-type PostType = {
-  _id: string;
-  author: Author;
-  updatedAt: Date;
-  content: string;
-  images: string[];
-};
+import { Post as PostType } from "@/types/post";
 
 type Props = {
   post: PostType;
 };
 
 function Post({ post }: Props) {
-  const { author, content, updatedAt, images } = post;
-  const { lastName, firstName, profile } = author;
+  const { author, content, updatedAt, images, reactions } = post;
+  const { lastName, firstName, profilePicture } = author;
 
   const renderedImages = images.slice(0, 3);
   const remainedImagesLength = images.length - renderedImages.length;
@@ -44,7 +31,7 @@ function Post({ post }: Props) {
   return (
     <div className="post">
       <div className="info">
-        <img src={profile} alt="profile picture" />
+        <img src={profilePicture} alt="profile picture" />
         <div className="text">
           <span className="name">
             {firstName} {lastName}

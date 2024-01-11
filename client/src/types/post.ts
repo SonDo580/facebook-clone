@@ -1,15 +1,17 @@
 import { Reaction } from "@/constants";
-import { UserRef } from "./user";
+import { User, UserRef } from "./user";
 
 type ReactionMap = Record<keyof typeof Reaction, UserRef[]>;
 
 type Post = {
-  author: UserRef;
+  _id: string;
+  author: Partial<User>;
   content: string;
   images: string[];
   reactions: ReactionMap;
+  updatedAt: Date;
 };
 
 type PostRef = string | Partial<Post>;
 
-export type { Post, PostRef };
+export type { ReactionMap, Post, PostRef };

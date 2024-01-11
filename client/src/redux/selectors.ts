@@ -2,4 +2,6 @@ import { RootState } from "./store";
 
 const authSelector = (state: RootState) => state.auth;
 
-export { authSelector };
+const postSliceSelector = (state: RootState) => state.post;
+
+export { authSelector, postSliceSelector };
