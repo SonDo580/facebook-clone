@@ -80,7 +80,7 @@ function Post({ post }: Props) {
           <div className="react">
             <ul className="reacts">
               {topReactions.map((reaction) => (
-                <li>
+                <li key={reaction}>
                   <img src={`/reactions/${reaction}.svg`} alt={reaction} />
                 </li>
               ))}
