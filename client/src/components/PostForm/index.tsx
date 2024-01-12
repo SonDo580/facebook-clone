@@ -7,6 +7,7 @@ import { authSelector, postSliceSelector } from "@/redux/selectors";
 import { createPostInit } from "@/redux/post/postSlice";
 import ProfileImg from "@/common/ProfileImg";
 import { registerOptions } from "./validation";
+import "./style.scss";
 
 type Props = {
   afterSubmit: () => void;
