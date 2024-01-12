@@ -5,7 +5,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { PROTECTED_ROUTES, PUBLIC_ROUTES } from "./config/routes";
-import { authSelector } from "./redux/selectors";
+import { authSelector, postSliceSelector } from "./redux/selectors";
 import AuthCheck from "./common/AuthCheck";
 import Skeleton from "./common/Skeleton";
 import Spinner from "./common/Spinner";
@@ -13,6 +13,8 @@ import "./App.scss";
 
 function App() {
   const { loading } = useSelector(authSelector);
+  const { postLoading } = useSelector(postSliceSelector);
+  const showSpinner = loading || postLoading;
 
   return (
     <>
@@ -30,7 +32,7 @@ function App() {
         </Routes>
       </Suspense>
 
-      {loading && <Spinner />}
+      {showSpinner && <Spinner />}
       <ToastContainer />
     </>
   );
