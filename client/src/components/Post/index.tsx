@@ -9,6 +9,7 @@ import { Reaction } from "@/constants";
 import { getTimeAgo } from "@/utils/datetime";
 import { getReactionStatistics } from "@/utils/reaction";
 import ProfileImg from "@/common/ProfileImg";
+import "./style.scss";
 
 type Props = {
   post: PostType;

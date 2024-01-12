@@ -4,8 +4,8 @@ import { Post as PostType } from "@/types/post";
 import { postSliceSelector } from "@/redux/selectors";
 
 import Skeleton from "@/common/Skeleton";
+import Post from "../Post";
 import "./style.scss";
-import Post from "./Post";
 
 type Props = {
   posts: PostType[];

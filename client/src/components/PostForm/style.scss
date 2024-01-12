@@ -1,0 +1,100 @@
+.postForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    img {
+      width: 50px;
+      aspect-ratio: 1 / 1;
+      border: 1px solid #ced0d4;
+      border-radius: 50%;
+      object-fit: contain;
+    }
+
+    & > div {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .name {
+      font-weight: bold;
+    }
+
+    button.audience {
+      width: fit-content;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+  }
+
+  textarea.postContent {
+    width: 100%;
+    height: 200px;
+    padding-right: 10px;
+    border: none;
+    outline: none;
+    resize: none;
+    font-size: 1.05rem;
+
+    &::-webkit-scrollbar {
+      width: 10px;
+    }
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #ced0d4;
+      border-radius: 20px;
+      border: 3px solid transparent;
+      display: none;
+    }
+    &:hover {
+      &::-webkit-scrollbar-thumb {
+        display: block;
+      }
+    }
+  }
+
+  .error {
+    color: red;
+  }
+
+  ul.items {
+    margin: 0;
+    padding: 15px 0;
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+    border: 1px solid #ced0d4;
+    border-radius: 10px;
+
+    li {
+      cursor: pointer;
+    }
+  }
+
+  button.submit {
+    background-color: #0866ff;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 0;
+    cursor: pointer;
+
+    &:hover {
+      background-color: blueviolet;
+    }
+  }
+}

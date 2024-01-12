@@ -5,8 +5,8 @@ import { authSelector } from "@/redux/selectors";
 
 import Modal from "@/common/Modal";
 import ProfileImg from "@/common/ProfileImg";
+import PostForm from "../PostForm";
 import "./style.scss";
-import PostForm from "./PostForm";
 
 function CreatePost() {
   const { user } = useSelector(authSelector);
