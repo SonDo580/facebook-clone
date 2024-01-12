@@ -23,10 +23,10 @@ function* getFeedPosts() {
   }
 }
 
-function* createPost() {
+function* createPost(action: ReturnType<typeof createPostInit>) {
   yield put(processPostPending());
   try {
-    const newPost: Post = yield call(postService.createPost);
+    const newPost: Post = yield call(postService.createPost, action.payload);
     yield put(createPostSuccess(newPost));
   } catch (error) {
     yield put(processPostFailed((error as Error).message));
