@@ -50,6 +50,7 @@ interface UserDoc extends Document {
   _id: DocId;
   firstName: string;
   lastName: string;
+  fullName: string;
   username: string;
   email: string;
   password: string;
@@ -253,6 +254,15 @@ const userSchema = new Schema<UserDoc>(
     timestamps: true,
   }
 );
+
+// Create virtual property fullName
+userSchema.virtual("fullName").get(function () {
+  return `${this.firstName} ${this.lastName}`;
+});
+
+// Include the virtual property when converting to object and JSON
+userSchema.set("toObject", { virtuals: true });
+userSchema.set("toJSON", { virtuals: true });
 
 const User = model<UserDoc>("User", userSchema);
 
