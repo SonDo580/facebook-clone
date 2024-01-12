@@ -1,8 +1,9 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FaCaretDown } from "react-icons/fa";
 
 import { authSelector } from "@/redux/selectors";
+import { createPostInit } from "@/redux/post/postSlice";
 import ProfileImg from "@/common/ProfileImg";
 import { registerOptions } from "./validation";
 
@@ -15,6 +16,7 @@ type FormFields = {
 };
 
 function PostForm({ afterSubmit }: Props) {
+  const dispatch = useDispatch();
   const { user } = useSelector(authSelector);
   const { firstName, fullName, profilePicture } = user!;
 
@@ -25,7 +27,7 @@ function PostForm({ afterSubmit }: Props) {
   } = useForm<FormFields>();
 
   const onSubmit: SubmitHandler<FormFields> = (data) => {
-    console.log(data);
+    dispatch(createPostInit(data));
     afterSubmit();
   };
 

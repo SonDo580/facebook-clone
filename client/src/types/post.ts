@@ -14,4 +14,8 @@ type Post = {
 
 type PostRef = string | Partial<Post>;
 
-export type { ReactionMap, Post, PostRef };
+type PostFormData = {
+  content: string;
+};
+
+export type { ReactionMap, Post, PostRef, PostFormData };

@@ -13,6 +13,15 @@ const getFeedPosts = async (): Promise<Post[]> => {
   }
 };
 
-const postService = { getFeedPosts };
+const createPost = async (): Promise<Post> => {
+  try {
+    const response = await axiosInstance.post<Post>(URL);
+    return response.data;
+  } catch (error) {
+    return handleServiceError(error);
+  }
+};
+
+const postService = { getFeedPosts, createPost };
 
 export default postService;
