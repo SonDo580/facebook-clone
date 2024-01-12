@@ -22,6 +22,18 @@ function Posts({ posts }: Props) {
     return <h1>{errorMsg}</h1>;
   }
 
+  if (posts.length === 0) {
+    return (
+      <p>
+        No posts to show.
+        <br />
+        Make friends and follow people to see their posts.
+        <br />
+        Or create your own posts.
+      </p>
+    );
+  }
+
   return (
     <div className="posts">
       {posts.map((post) => (
