@@ -76,18 +76,20 @@ function Post({ post }: Props) {
       </ul>
 
       <div className="statistics">
-        {totalReactions && (
-          <div className="react">
-            <ul className="reacts">
-              {topReactions.map((reaction) => (
-                <li key={reaction}>
-                  <img src={`/reactions/${reaction}.svg`} alt={reaction} />
-                </li>
-              ))}
-            </ul>
-            <span className="count">{totalReactions}</span>
-          </div>
-        )}
+        <div className="react">
+          {totalReactions && (
+            <>
+              <ul className="reacts">
+                {topReactions.map((reaction) => (
+                  <li key={reaction}>
+                    <img src={`/reactions/${reaction}.svg`} alt={reaction} />
+                  </li>
+                ))}
+              </ul>
+              <span className="count">{totalReactions}</span>
+            </>
+          )}
+        </div>
 
         <div className="comment todo">
           <FaComment />
