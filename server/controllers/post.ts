@@ -31,6 +31,11 @@ const createPost = [
       images,
     });
 
+    await post.populate({
+      path: "author",
+      select: "firstName lastName profilePicture",
+    });
+
     res.json(post);
   }),
 ];
