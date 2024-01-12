@@ -44,6 +44,7 @@ type User = {
   _id: string;
   firstName: string;
   lastName: string;
+  fullName: string;
   username: string;
   email: string;
   password: string;

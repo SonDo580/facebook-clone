@@ -13,7 +13,7 @@ import ProfileImg from "@/common/ProfileImg";
 function Account() {
   const dispatch = useDispatch();
   const { user, errorMsg } = useSelector(authSelector);
-  const { firstName, lastName, profilePicture } = user!;
+  const { fullName, profilePicture } = user!;
 
   const handleLogout = () => {
     dispatch(logoutInit());
@@ -35,9 +35,7 @@ function Account() {
             alt="profile"
             className="profile"
           />
-          <span className="name">
-            {firstName} {lastName}
-          </span>
+          <span className="name">{fullName}</span>
         </li>
         <li className="todo">
           <MdSettings />

@@ -16,7 +16,7 @@ type FormFields = {
 
 function PostForm({ afterSubmit }: Props) {
   const { user } = useSelector(authSelector);
-  const { firstName, lastName, profilePicture } = user!;
+  const { firstName, fullName, profilePicture } = user!;
 
   const {
     register,
@@ -34,9 +34,7 @@ function PostForm({ afterSubmit }: Props) {
       <div className="top">
         <ProfileImg profilePicture={profilePicture} alt="profile" />
         <div>
-          <span className="name">
-            {firstName} {lastName}
-          </span>
+          <span className="name">{fullName}</span>
           <button className="audience todo">
             <span>Post Audience</span>
             <FaCaretDown />

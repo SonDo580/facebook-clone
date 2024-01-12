@@ -7,7 +7,7 @@ import "./style.scss";
 
 function LeftBar() {
   const { user } = useSelector(authSelector);
-  const { firstName, lastName, profilePicture } = user!;
+  const { fullName, profilePicture } = user!;
 
   return (
     <aside className="leftBar">
@@ -18,9 +18,7 @@ function LeftBar() {
             alt="profile"
             className="profile"
           />
-          <span>
-            {firstName} {lastName}
-          </span>
+          <span>{fullName}</span>
         </li>
         <li className="todo">
           <img src="/leftBar/friends.png" alt="friends" />
