@@ -252,17 +252,14 @@ const userSchema = new Schema<UserDoc>(
   },
   {
     timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
   }
 );
 
-// Create virtual property fullName
 userSchema.virtual("fullName").get(function () {
   return `${this.firstName} ${this.lastName}`;
 });
-
-// Include the virtual property when converting to object and JSON
-userSchema.set("toObject", { virtuals: true });
-userSchema.set("toJSON", { virtuals: true });
 
 const User = model<UserDoc>("User", userSchema);
 
