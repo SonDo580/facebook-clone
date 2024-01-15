@@ -3,13 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FaCaretDown } from "react-icons/fa";
 
+import { Post } from "@/types/post";
 import { authSelector, postSliceSelector } from "@/redux/selectors";
-import { createPostInit } from "@/redux/post/postSlice";
+import { createPostInit, updatePostInit } from "@/redux/post/postSlice";
 import ProfileImg from "@/common/ProfileImg";
 import { registerOptions } from "./validation";
 import "./style.scss";
 
 type Props = {
+  initialData?: Partial<Post>;
   afterSubmit: () => void;
 };
 
@@ -17,22 +19,34 @@ type FormFields = {
   content: string;
 };
 
-function PostForm({ afterSubmit }: Props) {
+function PostForm({ initialData, afterSubmit }: Props) {
   const dispatch = useDispatch();
   const { user } = useSelector(authSelector);
   const { postLoading, postErrorMsg } = useSelector(postSliceSelector);
+
   const { firstName, fullName, profilePicture } = user!;
+  const editing = !!initialData;
+  const { _id: postId = "", content = "" } = initialData || {};
+  const defaultValues = {
+    content,
+  };
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormFields>();
+  } = useForm<FormFields>({
+    defaultValues,
+  });
 
   const [submitted, setSummitted] = useState(false);
 
   const onSubmit: SubmitHandler<FormFields> = (data) => {
-    dispatch(createPostInit(data));
+    if (editing) {
+      dispatch(updatePostInit({ postId, data }));
+    } else {
+      dispatch(createPostInit(data));
+    }
     setSummitted(true);
   };
 
@@ -65,7 +79,7 @@ function PostForm({ afterSubmit }: Props) {
         className="postContent"
         placeholder={`What's on your mind, ${firstName}?`}
         {...register("content", registerOptions.content)}
-      ></textarea>
+      />
 
       {errors.content && <p className="error">{errors.content.message}</p>}
       {postErrorMsg && <p className="error">{postErrorMsg}</p>}

@@ -20,7 +20,7 @@ type PostFormData = {
 
 type UpdatePostPayload = {
   postId: string;
-  data: Partial<PostFormData>;
+  data: PostFormData;
 };
 
 export type { ReactionMap, Post, PostRef, PostFormData, UpdatePostPayload };

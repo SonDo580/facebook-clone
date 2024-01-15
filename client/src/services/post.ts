@@ -28,7 +28,7 @@ const updatePost = async (
 ): Promise<Post> => {
   try {
     const { postId, data: updatePostData } = updatePostPayload;
-    const response = await axiosInstance.post<Post>(
+    const response = await axiosInstance.put<Post>(
       `${URL}/${postId}`,
       updatePostData
     );
