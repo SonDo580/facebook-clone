@@ -18,4 +18,9 @@ type PostFormData = {
   content: string;
 };
 
-export type { ReactionMap, Post, PostRef, PostFormData };
+type UpdatePostPayload = {
+  postId: string;
+  data: Partial<PostFormData>;
+};
+
+export type { ReactionMap, Post, PostRef, PostFormData, UpdatePostPayload };

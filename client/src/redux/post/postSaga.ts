@@ -11,7 +11,11 @@ import {
   processPostPending,
   processPostFailed,
   createPostSuccess,
+  updatePostInit,
+  updatePostSuccess,
 } from "./postSlice";
+
+// WORKERS
 
 function* getFeedPosts() {
   yield put(getPostsPending());
@@ -33,6 +37,21 @@ function* createPost(action: ReturnType<typeof createPostInit>) {
   }
 }
 
+function* updatePost(action: ReturnType<typeof updatePostInit>) {
+  yield put(processPostPending());
+  try {
+    const updatedPost: Post = yield call(
+      postService.updatePost,
+      action.payload
+    );
+    yield put(updatePostSuccess(updatedPost));
+  } catch (error) {
+    yield put(processPostFailed((error as Error).message));
+  }
+}
+
+// WATCHERS
+
 function* getFeedPostsWatcher() {
   yield takeLatest(getFeedPostsInit.type, getFeedPosts);
 }
@@ -41,6 +60,14 @@ function* createPostWatcher() {
   yield takeLatest(createPostInit.type, createPost);
 }
 
+function* updatePostWatcher() {
+  yield takeLatest(updatePostInit.type, updatePost);
+}
+
 export function* postSaga() {
-  yield all([call(getFeedPostsWatcher), call(createPostWatcher)]);
+  yield all([
+    call(getFeedPostsWatcher),
+    call(createPostWatcher),
+    call(updatePostWatcher),
+  ]);
 }

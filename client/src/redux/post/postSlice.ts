@@ -1,6 +1,6 @@
 import { createAction, createSlice } from "@reduxjs/toolkit";
 
-import { Post, PostFormData } from "@/types/post";
+import { Post, PostFormData, UpdatePostPayload } from "@/types/post";
 
 type PostSliceState = {
   posts: Post[];
@@ -54,6 +54,14 @@ const postSlice = createSlice({
       state.postErrorMsg = "";
       state.posts.unshift(action.payload);
     },
+    updatePostSuccess: (state, action) => {
+      const newPost = action.payload;
+      state.postLoading = false;
+      state.postErrorMsg = "";
+      state.posts = state.posts.map((post) =>
+        post._id === newPost._id ? newPost : post
+      );
+    },
     reactionPending: (state) => {
       state.reactionLoading = true;
     },
@@ -73,6 +81,7 @@ export const {
   processPostPending,
   processPostFailed,
   createPostSuccess,
+  updatePostSuccess,
 } = postSlice.actions;
 
 // Extra actions
@@ -82,5 +91,8 @@ const getFeedPostsInit = createAction(getActionType("getFeedPostsInit"));
 const createPostInit = createAction<PostFormData>(
   getActionType("createPostInit")
 );
+const updatePostInit = createAction<UpdatePostPayload>(
+  getActionType("updatePostInit")
+);
 
-export { getFeedPostsInit, createPostInit };
+export { getFeedPostsInit, createPostInit, updatePostInit };

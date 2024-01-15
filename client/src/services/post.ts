@@ -1,5 +1,5 @@
 import { handleServiceError } from "@/utils/error";
-import { Post, PostFormData } from "@/types/post";
+import { Post, PostFormData, UpdatePostPayload } from "@/types/post";
 import { Reaction } from "@/constants";
 import { axiosInstance } from "./request";
 
@@ -17,6 +17,21 @@ const getFeedPosts = async (): Promise<Post[]> => {
 const createPost = async (createPostData: PostFormData): Promise<Post> => {
   try {
     const response = await axiosInstance.post<Post>(URL, createPostData);
+    return response.data;
+  } catch (error) {
+    return handleServiceError(error);
+  }
+};
+
+const updatePost = async (
+  updatePostPayload: UpdatePostPayload
+): Promise<Post> => {
+  try {
+    const { postId, data: updatePostData } = updatePostPayload;
+    const response = await axiosInstance.post<Post>(
+      `${URL}/${postId}`,
+      updatePostData
+    );
     return response.data;
   } catch (error) {
     return handleServiceError(error);
@@ -42,6 +57,6 @@ const reactToPost = async (
   }
 };
 
-const postService = { getFeedPosts, createPost, reactToPost };
+const postService = { getFeedPosts, createPost, updatePost, reactToPost };
 
 export default postService;
