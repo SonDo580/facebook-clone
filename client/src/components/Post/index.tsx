@@ -33,7 +33,7 @@ function Post({ post }: Props) {
     setExpanded((expanded) => !expanded);
   };
 
-  const reactToPost = (reaction: Reaction) => {
+  const reactToPost = (reaction: Reaction | null) => {
     console.log(reaction);
   };
 
@@ -107,7 +107,7 @@ function Post({ post }: Props) {
       </div>
 
       <ul className="interact">
-        <li className="react">
+        <li className="react" onClick={() => reactToPost(null)}>
           <SlLike />
           <span>Like</span>
 

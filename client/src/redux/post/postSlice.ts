@@ -8,6 +8,9 @@ type PostSliceState = {
   errorMsg: string;
   postLoading: boolean;
   postErrorMsg: string;
+  reactionLoading: boolean;
+  reactionSuccess: boolean;
+  reactionErrorMsg: string;
 };
 
 const SLICE_NAME: string = "post";
@@ -18,6 +21,9 @@ const initialState: PostSliceState = {
   errorMsg: "",
   postLoading: false,
   postErrorMsg: "",
+  reactionLoading: false,
+  reactionSuccess: false,
+  reactionErrorMsg: "",
 };
 
 const postSlice = createSlice({
@@ -47,6 +53,13 @@ const postSlice = createSlice({
       state.postLoading = false;
       state.postErrorMsg = "";
       state.posts.unshift(action.payload);
+    },
+    reactionPending: (state) => {
+      state.reactionLoading = true;
+    },
+    reactionFailed: (state, action) => {
+      state.reactionLoading = false;
+      state.reactionErrorMsg = action.payload;
     },
   },
 });
