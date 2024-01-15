@@ -82,9 +82,7 @@ const updatePost = [
         images: images || [],
       },
       { new: true }
-    );
-
-    await updatedPost!.populate({
+    ).populate({
       path: "author",
       select: "firstName lastName profilePicture",
     });
@@ -175,17 +173,26 @@ const reactToPost = asyncHandler(async (req: CustomRequest, res: Response) => {
   }
 
   const userId = req.user!._id;
-  const { reactionType } = req.body;
+  const { reaction: reactionType } = req.body;
 
   // Just remove user reaction if reactionType is null
   if (reactionType === null) {
-    await post.updateOne({
-      $pull: Object.fromEntries(
-        REACTIONS.map((reaction) => [`reactions.${reaction}`, { user: userId }])
-      ),
+    const updatedPost = await Post.findByIdAndUpdate(
+      postId,
+      {
+        $pull: Object.fromEntries(
+          REACTIONS.map((reaction) => [`reactions.${reaction}`, userId])
+        ),
+      },
+      {
+        new: true,
+      }
+    ).populate({
+      path: "author",
+      select: "firstName lastName profilePicture",
     });
 
-    res.json({ message: "Success" });
+    res.json(updatedPost);
     return;
   }
 
@@ -203,13 +210,22 @@ const reactToPost = asyncHandler(async (req: CustomRequest, res: Response) => {
   });
 
   // Add user's new reaction
-  await post.updateOne({
-    $push: {
-      [`reactions.${reactionType}`]: userId,
+  const updatedPost = await Post.findByIdAndUpdate(
+    postId,
+    {
+      $push: {
+        [`reactions.${reactionType}`]: userId,
+      },
     },
+    {
+      new: true,
+    }
+  ).populate({
+    path: "author",
+    select: "firstName lastName profilePicture",
   });
 
-  res.json({ message: "Success" });
+  res.json(updatedPost);
 });
 
 export {
