@@ -165,7 +165,7 @@ function Post({ post }: Props) {
             </button>
 
             {menuVisible && (
-              <ul className="options">
+              <ul className="options" onClick={toggleMenu}>
                 <li onClick={showEditForm}>
                   <AiOutlineEdit />
                   <span>Edit Post</span>
