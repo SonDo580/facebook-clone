@@ -3,9 +3,10 @@ import {
   DeletePostReturnType,
   Post,
   PostFormData,
+  ReactToPostPayload,
+  ReactToPostReturnType,
   UpdatePostPayload,
 } from "@/types/post";
-import { Reaction } from "@/constants";
 import { axiosInstance } from "./request";
 
 const URL = "/posts";
@@ -54,16 +55,14 @@ const deletePost = async (postId: string): Promise<DeletePostReturnType> => {
   }
 };
 
-type ReactToPostReturnType = { message: string };
 const reactToPost = async (
-  postId: string,
-  reaction: Reaction | null
-): Promise<ReactToPostReturnType> => {
+  reactToPostPayload: ReactToPostPayload
+): Promise<Post> => {
   try {
-    const response = await axiosInstance.put<ReactToPostReturnType>(
-      `${URL}/${postId}/reacts`,
-      { reaction }
-    );
+    const { postId, reaction } = reactToPostPayload;
+    const response = await axiosInstance.put<Post>(`${URL}/${postId}/reacts`, {
+      reaction,
+    });
     return response.data;
   } catch (error) {
     return handleServiceError(error);

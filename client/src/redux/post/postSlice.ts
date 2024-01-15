@@ -1,6 +1,11 @@
 import { createAction, createSlice } from "@reduxjs/toolkit";
 
-import { Post, PostFormData, UpdatePostPayload } from "@/types/post";
+import {
+  Post,
+  PostFormData,
+  ReactToPostPayload,
+  UpdatePostPayload,
+} from "@/types/post";
 
 type PostSliceState = {
   posts: Post[];
@@ -8,8 +13,6 @@ type PostSliceState = {
   errorMsg: string;
   postLoading: boolean;
   postErrorMsg: string;
-  reactionLoading: boolean;
-  reactionSuccess: boolean;
   reactionErrorMsg: string;
 };
 
@@ -21,8 +24,6 @@ const initialState: PostSliceState = {
   errorMsg: "",
   postLoading: false,
   postErrorMsg: "",
-  reactionLoading: false,
-  reactionSuccess: false,
   reactionErrorMsg: "",
 };
 
@@ -58,11 +59,11 @@ const postSlice = createSlice({
       state.posts.unshift(action.payload);
     },
     updatePostSuccess: (state, action) => {
-      const newPost = action.payload;
+      const updatedPost = action.payload;
       state.postLoading = false;
       state.postErrorMsg = "";
       state.posts = state.posts.map((post) =>
-        post._id === newPost._id ? newPost : post
+        post._id === updatedPost._id ? updatedPost : post
       );
     },
     deletePostSuccess: (state, action) => {
@@ -70,11 +71,8 @@ const postSlice = createSlice({
       state.postErrorMsg = "";
       state.posts = state.posts.filter((post) => post._id !== action.payload);
     },
-    reactionPending: (state) => {
-      state.reactionLoading = true;
-    },
-    reactionFailed: (state, action) => {
-      state.reactionLoading = false;
+    reactToPostFailed: (state, action) => {
+      state.postLoading = false;
       state.reactionErrorMsg = action.payload;
     },
   },
@@ -92,6 +90,8 @@ export const {
   createPostSuccess,
   updatePostSuccess,
   deletePostSuccess,
+  reactToPostFailed,
+  reactToPostSuccess,
 } = postSlice.actions;
 
 // Extra actions
@@ -105,5 +105,14 @@ const updatePostInit = createAction<UpdatePostPayload>(
   getActionType("updatePostInit")
 );
 const deletePostInit = createAction<string>(getActionType("deletePostInit"));
+const reactToPostInit = createAction<ReactToPostPayload>(
+  getActionType("reactToPostInit")
+);
 
-export { getFeedPostsInit, createPostInit, updatePostInit, deletePostInit };
+export {
+  getFeedPostsInit,
+  createPostInit,
+  updatePostInit,
+  deletePostInit,
+  reactToPostInit,
+};

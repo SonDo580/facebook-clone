@@ -36,4 +36,16 @@ const getReactionStatistics = (reactions: ReactionMap) => {
   return { total, count, topReactions };
 };
 
-export { getReactionStatistics };
+const getUserReaction = (
+  reactions: ReactionMap,
+  userId: string
+): Reaction | null => {
+  for (const key of Object.keys(reactions) as Reaction[]) {
+    if (reactions[key].includes(userId)) {
+      return key;
+    }
+  }
+  return null;
+};
+
+export { getReactionStatistics, getUserReaction };

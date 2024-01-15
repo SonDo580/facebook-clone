@@ -171,6 +171,20 @@
     li.react {
       position: relative;
 
+      .current {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        img {
+          width: 23px;
+        }
+
+        span {
+          text-transform: capitalize;
+        }
+      }
+
       ul.reacts {
         display: none;
         position: absolute;

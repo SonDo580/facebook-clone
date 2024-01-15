@@ -25,6 +25,11 @@ type UpdatePostPayload = {
 
 type DeletePostReturnType = { deletedPostId: string };
 
+type ReactToPostPayload = {
+  postId: string;
+  reaction: Reaction | null;
+};
+
 export type {
   ReactionMap,
   Post,
@@ -32,4 +37,5 @@ export type {
   PostFormData,
   UpdatePostPayload,
   DeletePostReturnType,
+  ReactToPostPayload,
 };

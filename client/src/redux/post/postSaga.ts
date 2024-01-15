@@ -1,7 +1,12 @@
 import { all, call, put, takeLatest } from "redux-saga/effects";
 
 import postService from "@/services/post";
-import { DeletePostReturnType, Post } from "@/types/post";
+import {
+  DeletePostReturnType,
+  Post,
+  ReactToPostReturnType,
+  ReactionToPostReturnType,
+} from "@/types/post";
 import {
   getPostsPending,
   getPostsFailed,
@@ -15,6 +20,9 @@ import {
   updatePostSuccess,
   deletePostInit,
   deletePostSuccess,
+  reactToPostInit,
+  reactToPostFailed,
+  reactToPostSuccess,
 } from "./postSlice";
 
 // WORKERS
@@ -65,6 +73,19 @@ function* deletePost(action: ReturnType<typeof deletePostInit>) {
   }
 }
 
+function* reactToPost(action: ReturnType<typeof reactToPostInit>) {
+  yield put(processPostPending());
+  try {
+    const updatedPost: Post = yield call(
+      postService.reactToPost,
+      action.payload
+    );
+    yield put(updatePostSuccess(updatedPost));
+  } catch (error) {
+    yield put(reactToPostFailed((error as Error).message));
+  }
+}
+
 // WATCHERS
 
 function* getFeedPostsWatcher() {
@@ -83,11 +104,16 @@ function* deletePostWatcher() {
   yield takeLatest(deletePostInit.type, deletePost);
 }
 
+function* reactToPostWatcher() {
+  yield takeLatest(reactToPostInit.type, reactToPost);
+}
+
 export function* postSaga() {
   yield all([
     call(getFeedPostsWatcher),
     call(createPostWatcher),
     call(updatePostWatcher),
     call(deletePostWatcher),
+    call(reactToPostWatcher),
   ]);
 }

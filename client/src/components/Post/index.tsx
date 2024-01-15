@@ -12,8 +12,12 @@ import { MdClose } from "react-icons/md";
 import { Post as PostType } from "@/types/post";
 import { Reaction } from "@/constants";
 import { getTimeAgo } from "@/utils/datetime";
-import { getReactionStatistics } from "@/utils/reaction";
-import { deletePostInit, resetPostError } from "@/redux/post/postSlice";
+import { getReactionStatistics, getUserReaction } from "@/utils/reaction";
+import {
+  deletePostInit,
+  reactToPostInit,
+  resetPostError,
+} from "@/redux/post/postSlice";
 import { authSelector, postSliceSelector } from "@/redux/selectors";
 
 import ProfileImg from "@/common/ProfileImg";
@@ -29,8 +33,11 @@ function Post({ post }: Props) {
   const dispatch = useDispatch();
   const { user } = useSelector(authSelector);
   const { postErrorMsg } = useSelector(postSliceSelector);
+
   const { _id: postId, author, content, updatedAt, images, reactions } = post;
   const { lastName, firstName, profilePicture } = author;
+  const userId = user!._id;
+  const isAuthor = author._id === userId;
 
   const shortenedContent = content.slice(0, 1000);
   const showContentControl = shortenedContent.length < content.length;
@@ -46,7 +53,6 @@ function Post({ post }: Props) {
     setExpanded((expanded) => !expanded);
   };
 
-  const isAuthor = author._id === user!._id;
   const [menuVisible, setMenuVisible] = useState(false);
   const toggleMenu = () => {
     setMenuVisible((visible) => !visible);
@@ -74,8 +80,20 @@ function Post({ post }: Props) {
     }
   }, [dispatch, deleting, postErrorMsg]);
 
+  const currentReaction = getUserReaction(reactions, userId);
+
   const reactToPost = (reaction: Reaction | null) => {
-    console.log(reaction);
+    if (reaction !== currentReaction) {
+      dispatch(reactToPostInit({ postId, reaction }));
+    }
+  };
+
+  const reactionDefaultHandler = () => {
+    if (currentReaction) {
+      reactToPost(null);
+    } else {
+      reactToPost(Reaction.like);
+    }
   };
 
   return (
@@ -149,9 +167,23 @@ function Post({ post }: Props) {
         </div>
 
         <ul className="interact">
-          <li className="react" onClick={() => reactToPost(null)}>
-            <SlLike />
-            <span>Like</span>
+          <li className="react">
+            <div className="current" onClick={reactionDefaultHandler}>
+              {currentReaction === null ? (
+                <>
+                  <SlLike />
+                  <span>Like</span>
+                </>
+              ) : (
+                <>
+                  <img
+                    src={`/reactions/${currentReaction}.svg`}
+                    alt={currentReaction}
+                  />
+                  <span>{currentReaction}</span>
+                </>
+              )}
+            </div>
 
             <ul className="reacts">
               {(Object.keys(Reaction) as Reaction[]).map((reaction) => (
