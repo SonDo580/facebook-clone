@@ -5,8 +5,7 @@ const createPostValidations = [
   body("content")
     .trim()
     .notEmpty()
-    .withMessage(requiredMessage("Post content"))
-    .escape(),
+    .withMessage(requiredMessage("Post content")),
 ];
 
 const updatePostValidations = [
@@ -14,8 +13,7 @@ const updatePostValidations = [
     .if((_, { req }) => req.body.content !== undefined)
     .trim()
     .notEmpty()
-    .withMessage(requiredMessage("Post content"))
-    .escape(),
+    .withMessage(requiredMessage("Post content")),
 ];
 
 export { createPostValidations, updatePostValidations };

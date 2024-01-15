@@ -23,16 +23,14 @@ const registerValidations = [
     .notEmpty()
     .withMessage(requiredMessage("First Name"))
     .isLength({ max: NAME_MAX_LENGTH })
-    .withMessage(lengthMessage("First Name", { max: NAME_MAX_LENGTH }))
-    .escape(),
+    .withMessage(lengthMessage("First Name", { max: NAME_MAX_LENGTH })),
 
   body("lastName")
     .trim()
     .notEmpty()
     .withMessage(requiredMessage("Last Name"))
     .isLength({ max: NAME_MAX_LENGTH })
-    .withMessage(lengthMessage("Last Name", { max: NAME_MAX_LENGTH }))
-    .escape(),
+    .withMessage(lengthMessage("Last Name", { max: NAME_MAX_LENGTH })),
 
   body("email")
     .trim()
@@ -102,8 +100,7 @@ const updateUserValidations = [
     .notEmpty()
     .withMessage(requiredMessage("First Name"))
     .isLength({ max: NAME_MAX_LENGTH })
-    .withMessage(lengthMessage("First Name", { max: NAME_MAX_LENGTH }))
-    .escape(),
+    .withMessage(lengthMessage("First Name", { max: NAME_MAX_LENGTH })),
 
   body("lastName")
     .if((_, { req }) => req.body.lastName !== undefined)
@@ -111,8 +108,7 @@ const updateUserValidations = [
     .notEmpty()
     .withMessage(requiredMessage("Last Name"))
     .isLength({ max: NAME_MAX_LENGTH })
-    .withMessage(lengthMessage("Last Name", { max: NAME_MAX_LENGTH }))
-    .escape(),
+    .withMessage(lengthMessage("Last Name", { max: NAME_MAX_LENGTH })),
 
   body("email")
     .if((_, { req }) => req.body.email !== undefined)
