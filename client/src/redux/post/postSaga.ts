@@ -1,12 +1,7 @@
 import { all, call, put, takeLatest } from "redux-saga/effects";
 
 import postService from "@/services/post";
-import {
-  DeletePostReturnType,
-  Post,
-  ReactToPostReturnType,
-  ReactionToPostReturnType,
-} from "@/types/post";
+import { DeletePostReturnType, Post } from "@/types/post";
 import {
   getPostsPending,
   getPostsFailed,
@@ -22,7 +17,6 @@ import {
   deletePostSuccess,
   reactToPostInit,
   reactToPostFailed,
-  reactToPostSuccess,
 } from "./postSlice";
 
 // WORKERS

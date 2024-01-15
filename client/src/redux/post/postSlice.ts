@@ -91,7 +91,6 @@ export const {
   updatePostSuccess,
   deletePostSuccess,
   reactToPostFailed,
-  reactToPostSuccess,
 } = postSlice.actions;
 
 // Extra actions
