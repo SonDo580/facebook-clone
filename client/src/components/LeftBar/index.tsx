@@ -12,7 +12,7 @@ function LeftBar() {
   return (
     <aside className="leftBar">
       <ul className="items">
-        <li>
+        <li className="todo">
           <ProfileImg
             profilePicture={profilePicture}
             alt="profile"

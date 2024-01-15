@@ -29,7 +29,7 @@ function Account() {
   return (
     <div className="account">
       <ul className="items">
-        <li>
+        <li className="todo">
           <ProfileImg
             profilePicture={profilePicture}
             alt="profile"
