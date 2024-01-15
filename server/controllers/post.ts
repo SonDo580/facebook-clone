@@ -84,6 +84,11 @@ const updatePost = [
       { new: true }
     );
 
+    await updatedPost!.populate({
+      path: "author",
+      select: "firstName lastName profilePicture",
+    });
+
     res.json(updatedPost);
   }),
 ];
