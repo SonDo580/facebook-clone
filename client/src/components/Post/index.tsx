@@ -98,7 +98,7 @@ function Post({ post }: Props) {
 
           {showContentControl && (
             <>
-              <span>...</span>
+              {!expanded && <span>...</span>}
               <button onClick={toggleContent} className="contentControl">
                 {expanded ? "See less" : "See more"}
               </button>
