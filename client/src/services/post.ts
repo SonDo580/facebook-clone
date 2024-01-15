@@ -1,5 +1,10 @@
 import { handleServiceError } from "@/utils/error";
-import { Post, PostFormData, UpdatePostPayload } from "@/types/post";
+import {
+  DeletePostReturnType,
+  Post,
+  PostFormData,
+  UpdatePostPayload,
+} from "@/types/post";
 import { Reaction } from "@/constants";
 import { axiosInstance } from "./request";
 
@@ -38,10 +43,18 @@ const updatePost = async (
   }
 };
 
-type ReactToPostReturnType = {
-  message: string;
+const deletePost = async (postId: string): Promise<DeletePostReturnType> => {
+  try {
+    const response = await axiosInstance.delete<DeletePostReturnType>(
+      `${URL}/${postId}`
+    );
+    return response.data;
+  } catch (error) {
+    return handleServiceError(error);
+  }
 };
 
+type ReactToPostReturnType = { message: string };
 const reactToPost = async (
   postId: string,
   reaction: Reaction | null
@@ -57,6 +70,12 @@ const reactToPost = async (
   }
 };
 
-const postService = { getFeedPosts, createPost, updatePost, reactToPost };
+const postService = {
+  getFeedPosts,
+  createPost,
+  updatePost,
+  deletePost,
+  reactToPost,
+};
 
 export default postService;

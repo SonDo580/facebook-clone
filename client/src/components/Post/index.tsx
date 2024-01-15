@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 import { SlLike } from "react-icons/sl";
 import { FaComment, FaRegComment, FaShare } from "react-icons/fa";
@@ -12,7 +13,8 @@ import { Post as PostType } from "@/types/post";
 import { Reaction } from "@/constants";
 import { getTimeAgo } from "@/utils/datetime";
 import { getReactionStatistics } from "@/utils/reaction";
-import { authSelector } from "@/redux/selectors";
+import { deletePostInit, resetPostError } from "@/redux/post/postSlice";
+import { authSelector, postSliceSelector } from "@/redux/selectors";
 
 import ProfileImg from "@/common/ProfileImg";
 import Modal from "@/common/Modal";
@@ -24,8 +26,10 @@ type Props = {
 };
 
 function Post({ post }: Props) {
+  const dispatch = useDispatch();
   const { user } = useSelector(authSelector);
-  const { author, content, updatedAt, images, reactions } = post;
+  const { postErrorMsg } = useSelector(postSliceSelector);
+  const { _id: postId, author, content, updatedAt, images, reactions } = post;
   const { lastName, firstName, profilePicture } = author;
 
   const shortenedContent = content.slice(0, 1000);
@@ -55,6 +59,20 @@ function Post({ post }: Props) {
   const hideEditForm = () => {
     setEditFormVisible(false);
   };
+
+  const [deleting, setDeleting] = useState(false);
+  const deletePost = () => {
+    dispatch(deletePostInit(postId));
+    setDeleting(true);
+  };
+
+  useEffect(() => {
+    if (deleting && postErrorMsg) {
+      toast.error(postErrorMsg);
+      setDeleting(false);
+      dispatch(resetPostError());
+    }
+  }, [dispatch, deleting, postErrorMsg]);
 
   const reactToPost = (reaction: Reaction | null) => {
     console.log(reaction);
@@ -170,7 +188,7 @@ function Post({ post }: Props) {
                   <AiOutlineEdit />
                   <span>Edit Post</span>
                 </li>
-                <li className="todo">
+                <li onClick={deletePost}>
                   <BsTrash />
                   <span>Delete Post</span>
                 </li>

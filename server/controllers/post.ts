@@ -127,7 +127,7 @@ const deletePost = asyncHandler(async (req: CustomRequest, res: Response) => {
 
   // Delete the post
   await post.deleteOne();
-  res.json({ message: "Success" });
+  res.json({ deletedPostId: postId });
 });
 
 /* Get a post */

@@ -23,4 +23,13 @@ type UpdatePostPayload = {
   data: PostFormData;
 };
 
-export type { ReactionMap, Post, PostRef, PostFormData, UpdatePostPayload };
+type DeletePostReturnType = { deletedPostId: string };
+
+export type {
+  ReactionMap,
+  Post,
+  PostRef,
+  PostFormData,
+  UpdatePostPayload,
+  DeletePostReturnType,
+};

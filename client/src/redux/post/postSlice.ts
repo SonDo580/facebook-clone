@@ -49,6 +49,9 @@ const postSlice = createSlice({
       state.postLoading = false;
       state.postErrorMsg = action.payload;
     },
+    resetPostError: (state) => {
+      state.postErrorMsg = "";
+    },
     createPostSuccess: (state, action) => {
       state.postLoading = false;
       state.postErrorMsg = "";
@@ -61,6 +64,11 @@ const postSlice = createSlice({
       state.posts = state.posts.map((post) =>
         post._id === newPost._id ? newPost : post
       );
+    },
+    deletePostSuccess: (state, action) => {
+      state.postLoading = false;
+      state.postErrorMsg = "";
+      state.posts = state.posts.filter((post) => post._id !== action.payload);
     },
     reactionPending: (state) => {
       state.reactionLoading = true;
@@ -80,8 +88,10 @@ export const {
   getPostsSuccess,
   processPostPending,
   processPostFailed,
+  resetPostError,
   createPostSuccess,
   updatePostSuccess,
+  deletePostSuccess,
 } = postSlice.actions;
 
 // Extra actions
@@ -94,5 +104,6 @@ const createPostInit = createAction<PostFormData>(
 const updatePostInit = createAction<UpdatePostPayload>(
   getActionType("updatePostInit")
 );
+const deletePostInit = createAction<string>(getActionType("deletePostInit"));
 
-export { getFeedPostsInit, createPostInit, updatePostInit };
+export { getFeedPostsInit, createPostInit, updatePostInit, deletePostInit };
