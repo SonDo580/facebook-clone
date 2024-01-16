@@ -4,7 +4,7 @@ import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 
 import connectDB from "./config/db";
-import { corsOptions } from "./config/cors";
+import corsOptions from "./config/cors";
 import errorHandler from "./middlewares/error";
 import authRouter from "./routes/auth";
 import userRouter from "./routes/user";

@@ -23,4 +23,4 @@ const corsOptions: CorsOptions = {
   credentials: true,
 };
 
-export { corsOptions };
+export default corsOptions;
