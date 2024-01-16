@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 
 import connectDB from "./config/db";
+import { corsOptions } from "./config/cors";
 import errorHandler from "./middlewares/error";
 import authRouter from "./routes/auth";
 import userRouter from "./routes/user";
@@ -13,19 +14,7 @@ import postRouter from "./routes/post";
 dotenv.config();
 connectDB(); // connect to database
 const app = express();
-
-// CORS config
-const allowedOrigins = [
-  process.env.NODE_ENV === "production"
-    ? process.env.CLIENT_URL!
-    : "http://localhost:5173",
-];
-app.use(
-  cors({
-    origin: allowedOrigins,
-    credentials: true,
-  })
-);
+app.use(cors(corsOptions)); // CORS config
 
 // Add middlewares
 app.use(cookieParser());
@@ -38,7 +27,7 @@ app.use("/users", userRouter);
 app.use("/friends", friendRouter);
 app.use("/posts", postRouter);
 
-// Custom error handling
+// Custom error handler
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
