@@ -4,10 +4,8 @@ A social media application that replicates some of the features of Facebook. It 
 
 ## Demo
 
-https://sondm-facebook.netlify.app
-
 > [!NOTE]
-> The server may take up to 1 minute to process the first request. It spins down after 15 minutes of no incoming traffic, and will need some time to spin back up.
+> Netlify suspended this site for some reasons (https://sondm-facebook.netlify.app)
 
 ## Features
 
