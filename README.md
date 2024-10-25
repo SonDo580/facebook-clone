@@ -1,32 +1,15 @@
 # Facebook Clone
 
-A social media application that replicates some of the features of Facebook. It provides users a platform to connect, share, and engage with other people.
+A social media application that replicates some of the features of Facebook.
 
 ## Demo
 
 > [!NOTE]
-> Netlify suspended this site for some reasons (https://sondm-facebook.netlify.app)
+> Netlify suspended the live website (copyright issue). Please run the app locally to check.
 
 ## Features
 
-1. **Implemented**
-
-- Authentication: register, login, logout.
-- Post feature: get feed posts, react to post, create/edit/delete post.
-- (BE) User management: get user info, update user info, delete account
-- (BE) Follow and unfollow people.
-- (BE) Friend feature: friend list, friend request list, send/cancel/accept/reject friend requests, unfriend.
-
-2. **In progress**
-
-- Allow adding post photos.
-
-3. **Todo**
-
-- Use infinite scroll to get feed posts.
-- Return posts even when user hasn't created any post or followed any person.
-- (FE) Build UI for the other pages (Profile, Friends).
-- (BE) Comment: add/edit/delete comment, comment list, react and reply to comment.
+See `progress.md`
 
 ## Technologies
 
